@@ -117,6 +117,17 @@ Casual weekend outfit in light rain...
 
 Instead, pass the full `Structured OOTD Styling Card` prompt from `references/outfit-board-prompting.md`.
 
+OpenClaw adapter field mapping:
+
+```yaml
+compiled_image_prompt: "send this to image generation"
+image_prompt_brief: "debug/summary only; never send to image generation"
+prompt_en: "debug/summary only; never send to image generation"
+visual_summary: "debug/summary only; never send to image generation"
+```
+
+If the prompt sent to the image API is shorter than a complete layout brief and can produce a single dressed figure, the adapter should treat it as invalid and ask the stylist reasoning step to recompile `compiled_image_prompt`.
+
 For Google image models:
 
 - `nano-banana-pro-preview` / Nano Banana Pro: use the full visual-spec prompt.

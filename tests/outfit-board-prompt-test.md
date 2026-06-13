@@ -609,12 +609,14 @@ Casual weekend dad outfit in light rain: solid black fine-knit short-sleeve top.
 - The generated image became a standalone photorealistic full-body person photo.
 - It did not follow the `Structured OOTD Styling Card` template.
 - It lacked surrounding item cards, Chinese labels, fabric/color panels, and bottom analysis.
+- A later run improved from photorealistic photo to simple illustration, but still failed because it produced only one central figure with a few labels and no full outfit-board structure.
 
 Regression rule:
 
 - A short lifestyle/photo prompt is not a valid outfit-board prompt.
 - Any prompt that starts with "a person wearing", "fashion photo", "casual weekend outfit", or similar lookbook wording must be rejected before image generation.
 - The image model must receive the compiled outfit-board prompt only.
+- A simple illustrated person with 2-3 labels is still a failed board. It must include item cards, fabric/color/detail panels, and bottom analysis.
 
 Expected prompt start for `nano-banana-pro-preview`:
 
@@ -645,3 +647,4 @@ Pass criteria:
 - Output prompt includes surrounding item cards and bottom analysis.
 - Output prompt includes uploaded-item fidelity locks.
 - Generated image should be a vertical OOTD board; if it becomes a single person photo, mark the run failed and regenerate with the Google model-specific prompt.
+- Generated image should not be accepted if it only shows one central figure plus sparse labels. Require at least 4 surrounding item cards or equivalent numbered callout blocks, plus color/fabric/detail elements.

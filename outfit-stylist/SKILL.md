@@ -168,6 +168,64 @@ When visual output is available, create a vertical outfit board/styling board by
 
 The image prompt sent to the generator must force an outfit-board layout. If a prompt could reasonably produce a standalone photorealistic model photo, studio portrait, catalogue lookbook, or virtual try-on, rewrite it before generation.
 
+## Critical Image Prompt Contract
+
+This section is mandatory even when the host runtime does not read reference files.
+
+Before calling image generation, create one field named `compiled_image_prompt`. This is the only prompt allowed to be sent to the image model.
+
+Do not send these fields to image generation:
+
+- `image_prompt_brief`
+- `prompt_en`
+- `mood_prompt`
+- `visual_summary`
+- any short English outfit description
+
+Invalid image prompts:
+
+```text
+Casual weekend dad outfit in light rain...
+A man wearing a black knit top...
+Illustration with clear garment details and Chinese styling notes...
+```
+
+These are invalid because they can produce a single figure illustration instead of a complete outfit board.
+
+For any Google Gemini / Nano Banana image model, `compiled_image_prompt` must start with one of these two openings:
+
+```text
+Create a vertical 9:16 professional Chinese OOTD styling card / outfit board.
+This is an illustrated fashion notebook infographic, not a single model photo.
+```
+
+or, for fast/weak instruction-following models:
+
+```text
+CREATE A VERTICAL 9:16 STRUCTURED OOTD STYLING CARD / OUTFIT BOARD.
+Do NOT create a single photorealistic man/woman photo.
+```
+
+A valid `compiled_image_prompt` must contain all of these blocks:
+
+```text
+1. Artifact type: vertical 9:16 Chinese OOTD styling card / outfit board.
+2. Layout: central illustrated outfit figure or flat-lay plus surrounding item cards.
+3. Required item cards: 上衣 / 下装 / 鞋子 / 包包 / 配饰 / 外套.
+4. Styling board elements: fabric texture circles, color chips, thin arrows, bottom analysis strip.
+5. Exact short Chinese text fields: 标题 / 场景 / 首选理由 / 搭配要点 / 风险提醒.
+6. Selected outfit details for each item.
+7. Fidelity locks for uploaded garments.
+8. Hard exclusions: no standalone person photo, no studio portrait, no catalogue lookbook, no virtual try-on, no lifestyle props.
+```
+
+Pre-call validation:
+
+```text
+If the prompt can still produce only one dressed person on a plain background, do not call image generation.
+Rewrite it as a full outfit-board prompt first.
+```
+
 If image output is unavailable, say so briefly and provide the text-board fallback instead of silently omitting the image.
 
 If the image model cannot reliably render Chinese, generate a clean numbered visual board and provide the exact Chinese annotations separately.
