@@ -42,11 +42,12 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
    - clothes: available items by text or image
    - intent: target impression and impressions to avoid
 3. Apply wardrobe-first logic: existing clothes first, substitutes second, purchases last.
-4. Recommend 2-3 complete looks when possible.
-5. Put the best option first and keep output mobile-friendly.
-6. Add a short reason, risk note, and quick substitution.
-7. If image output is requested, follow `references/outfit-board-prompting.md`.
-8. If image models are unavailable, use the fallback behavior in `references/model-capability-config.md`.
+4. By default, recommend one strongest outfit, one optional adjustment/backup, and one "avoid" section.
+5. Only provide 2-3 full outfit options when the user explicitly asks for multiple plans or detailed analysis.
+6. Put the best option first and keep output mobile-friendly.
+7. Add a short reason, risk note, and quick substitution.
+8. If image output is requested, follow `references/outfit-board-prompting.md`.
+9. If image models are unavailable, use the fallback behavior in `references/model-capability-config.md`.
 
 ## Required References
 
@@ -65,7 +66,8 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 ## Output Rules
 
 - Default to Chinese for advice, titles, callouts, and outfit-board text.
-- Keep normal recommendations compact: 2-3 outfit cards and a quick final judgment.
+- Keep normal recommendations compact: one main outfit, one optional adjustment or backup, and a "穿搭雷区" section.
+- Do not default to three full plans. Use three plans only when the user asks for multiple options.
 - Write like a calm human stylist: make a judgment, explain the tradeoff, then give the exact outfit.
 - Avoid long theoretical explanations unless the user asks for the reasoning model.
 - Explain why the first option is preferred in one short sentence.

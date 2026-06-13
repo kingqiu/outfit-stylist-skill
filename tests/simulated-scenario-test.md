@@ -289,6 +289,75 @@ Recommended next iteration:
 - Tighten mobile output for 3-look recommendations.
 - Then test an outfit-board prompt generated from Scenario 1 or Scenario 3.
 
+## Default Output Structure Iteration
+
+Issue found after single-image test:
+
+- Default output should not expand into `方案 1 / 方案 2 / 方案 3`.
+- Three full plans are too much for phone reading unless the user explicitly asks.
+- The third plan is often more useful as a negative example or avoid section.
+
+Updated default:
+
+```markdown
+## 今日建议
+
+**我建议你优先选这套。**
+一句话说明判断。
+
+### 首选穿法
+具体组合。
+
+### 小调整
+1-2 个可执行调整。
+
+### 如果想更...
+一个轻量替换或备选方向。
+
+## 穿搭雷区
+- 避免什么，以及为什么。
+```
+
+Decision:
+
+- Default output = 首选穿法 + 小调整 + 如果想更... + 穿搭雷区.
+- Multiple full plans only when the user asks for 2-3 options or detailed analysis.
+
+## Single-Image Polo Test
+
+Prompt:
+
+> 35 岁男性，明天下午跟朋友约了去一个金融客户那里做商务拜访，基于一张灰色短袖 Polo 图片做搭配建议。
+
+Output shape that matched user expectation:
+
+```markdown
+## 今日建议
+
+**我建议你把这件灰色 Polo 往“干净商务休闲”方向搭。**  
+它本身带一点运动休闲感，所以去金融客户那里，正式感要靠裤子、鞋、包和外套补回来。
+
+### 首选穿法
+灰色 Polo + 深色西裤/挺括休闲裤 + 黑色乐福鞋 + 黑色皮带 + 深色商务包。  
+如果客户环境偏正式，加一件藏青色轻薄西装外套，进办公室前穿上会更完整。
+
+### 小调整
+Polo 衣摆保持平整，建议扎进裤子或半扎；鞋不要用运动鞋，包也别用运动双肩包。
+
+### 穿搭雷区
+灰色 Polo + 牛仔裤 + 运动鞋。  
+不是不好看，而是去金融客户那里会显得太松。
+```
+
+Visual output:
+
+- `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd.png`
+
+Decision:
+
+- This is the preferred default text length and section structure.
+- Use image boards as optional companion output when requested or when testing image mode.
+
 ## Copy Voice Iteration
 
 Issue found after review:

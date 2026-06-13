@@ -38,22 +38,19 @@ Better:
 ```markdown
 ## 今日建议
 
-**我建议你优先选方案 1。**  
+**我建议你优先选这套。**  
 一句人话判断：为什么这套适合今天，而不是泛泛说好看。
 
-### 方案 1｜首选
+### 首选穿法
 这套的作用是...
 
 穿法：...
 小调整：...
 
-### 方案 2｜如果想更...
-这套比方案 1 ...
+### 如果想更...
+给一个轻量替换或调整，不要展开成长方案。
 
-穿法：...
-小调整：...
-
-## 我不建议
+## 穿搭雷区
 ...
 ```
 
@@ -78,3 +75,4 @@ Human voice does not mean long. Keep the first recommendation readable in one ph
 - 1 tradeoff sentence
 - 1 exact outfit line
 - 1 risk or adjustment line
+- 1 avoid section
