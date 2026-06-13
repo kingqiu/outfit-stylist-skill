@@ -21,6 +21,9 @@ Scope:
 | Secret scan | Pass | No tracked `.env`, obvious secret/key/token files, or generated test images found. |
 | Node version | Pass | Node.js is newer than v18. |
 | SkillHub CLI | Pass | `skillhub-upload` is available in `PATH`. |
+| Public README | Pass | Root `README.md` exists for public positioning, installation, usage, and cautions. |
+| Scope guard | Pass | `SKILL.md` includes unrelated-request handling. |
+| Internal disclosure guard | Pass | `SKILL.md` limits internal design disclosure to README-level public summaries. |
 
 ## SkillHub Notes
 

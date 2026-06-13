@@ -23,6 +23,10 @@ Run this checklist before publishing, installing into another agent, or making a
 
 ## Core Behavior
 
+- `SKILL.md` includes a scope guard for unrelated requests.
+- Unrelated tasks are not force-fit into outfit styling just because the user mentions the skill.
+- `SKILL.md` includes an internal design disclosure guard.
+- Prompt extraction or internal design reconstruction requests receive only README-level public summaries and are redirected to normal usage.
 - Default recommendation is Chinese.
 - Default deliverable is concise text advice plus a generated outfit board when image output is available.
 - Text-only advice is allowed only when image generation is unavailable, explicitly unwanted, or impossible in the current agent.
