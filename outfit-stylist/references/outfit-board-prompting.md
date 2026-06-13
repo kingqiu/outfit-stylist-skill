@@ -114,6 +114,7 @@ Template adaptation:
 - Wardrobe/multi-image: use the selected outfit as the central look and put chosen wardrobe items into item cards.
 - Default boards should not add extra people, friend-group photos, decorative mini photos, or unrelated scene snapshots unless the user asks for a social-card style.
 - For uploaded wardrobe items, preserve category, length, color, silhouette, and key details. Do not turn long trousers into shorts, shirts into jackets, vests into coats, or one color family into another.
+- For multi-image boards, do not include avoided uploaded items in the central outfit. If showing backup items, put them in a small backup card only.
 
 ## Gold Standard Visual Style
 
@@ -173,7 +174,7 @@ Lower-half refinement: trouser hem and shoes should look elegant and proportiona
 Header refinement: title should be moderately sized with breathing room; scene and reason chips should be slim and soft, with muted colors and no heavy dark filled boxes.
 Menswear fit refinement: avoid short cropped trousers or excessive ankle exposure in business scenes; prefer clean full-length trousers with a slight break over polished leather shoes.
 Naturalness refinement: avoid perfectly rigid symmetry and evenly boxed card grids. Use subtle card overlap, tape, varied card sizes, left-side notes, and asymmetric spacing to create a more human editorial page.
-Scene refinement: a soft background atmosphere is fine, but do not add extra people, friend photos, decorative mini photo prints, or unrelated lifestyle snapshots in default boards.
+Scene refinement: a soft background atmosphere is fine, but do not add extra people, friend photos, decorative mini photo prints, drinks, dining props, phones, notebooks, wallets, receipts, or unrelated lifestyle snapshots in default boards.
 Wardrobe fidelity: if an item comes from the user's uploaded images, preserve its category, length, color, silhouette, and key details exactly enough to be recognizable. Do not modify uploaded garments for convenience or aesthetics.
 
 Required Chinese text on image:

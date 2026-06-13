@@ -510,3 +510,33 @@ Decision:
 - Before image generation, lock each selected item's category, length, color family, silhouette, and key visible details.
 - Do not change uploaded long trousers into shorts, shirts into jackets, vests into coats, or alter key color/design details for convenience.
 - If an uploaded item is unsuitable for the weather or occasion, choose another uploaded item or state that a missing substitute is needed instead of changing the garment.
+
+## Scenario 5: Multi-Image Business Social Retest
+
+Saved output: `tests/visual-outputs/scenario-5-multi-image-business-social-green-knit-ootd-v2-fidelity.png`
+Output size: 944 x 1667 px, close to 9:16
+
+Prompt direction:
+
+```text
+Use selected uploaded items with strict fidelity locks:
+Image 1: deep green short-sleeve knit top.
+Image 4: off-white full-length drawstring trousers; must remain long trousers.
+Image 3: off-white sleeveless vest; must remain a vest.
+Image 6: deep brown short-sleeve knit as backup note only.
+```
+
+QA:
+
+- Pass: image 4 remained cream full-length trousers, not shorts.
+- Pass: image 3 remained a sleeveless vest.
+- Pass: image 1 remained the main green knit top.
+- Pass: side-stripe pants were not used in the central outfit.
+- Pass: text + image output contract was followed.
+- Watch: background included dining/drink props; default boards should avoid unrelated drinks or lifestyle props even when the occasion is social.
+
+Decision:
+
+- Fidelity locks worked and should be mandatory for multi-image boards.
+- Multi-image logic needs explicit `use / backup / avoid for this occasion` item status before generating the board.
+- Missing shoes/bags should be labeled as suggested additions, not treated as uploaded inventory.

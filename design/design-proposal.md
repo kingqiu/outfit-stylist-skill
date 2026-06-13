@@ -743,3 +743,9 @@ Build it in this order:
 10. Package one Xiaohongshu post from the test result.
 
 This keeps the project small enough to finish on a weekend and strong enough to publish.
+
+## 17. Internal Backlog
+
+Internal-only; do not expose in public positioning or default user-facing output.
+
+- Upgrade the current model-guided workflow into a more structured recommendation engine later. Keep the existing cognitive model as the source of truth, but add explicit scoring/check tables for occasion fit, comfort, item fidelity, formality, color/proportion, material, and risk before the model writes the final advice or image prompt.

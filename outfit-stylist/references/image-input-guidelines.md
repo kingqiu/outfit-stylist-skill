@@ -66,10 +66,50 @@ When the user uploads multiple items:
 
 1. Create a compact inventory.
 2. Preserve item identity: category, length, color family, key silhouette, and visible design details.
-3. Group items by compatibility: color, proportion, texture, formality, season.
-4. Build 2-3 complete outfits.
-5. Mark best, backup, and not-recommended combinations.
-6. Add missing items such as shoes, bag, outerwear, or accessories.
+3. Mark each item as `use`, `backup`, or `avoid for this occasion`.
+4. Group items by compatibility: color, proportion, texture, formality, season.
+5. Build one strongest outfit first, then one backup only if useful.
+6. Explain why unsuitable uploaded items are not used.
+7. Add missing items such as shoes, bag, outerwear, or accessories, but label them as suggestions rather than uploaded items.
+8. Generate the outfit board from the selected outfit and fidelity locks.
+
+## Multi-Image Selection Logic
+
+Use occasion fit before color matching.
+
+```text
+occasion requirement
+> item fidelity
+> formality fit
+> comfort/weather fit
+> color and proportion harmony
+> novelty or style interest
+```
+
+For each uploaded item, decide:
+
+- `use`: belongs in the main outfit.
+- `backup`: works if the user wants a different mood.
+- `avoid for this occasion`: not wrong generally, but sends the wrong signal now.
+
+Do not create three full options by default. For most multi-image requests, provide:
+
+- one main combination
+- one backup adjustment
+- one avoid section
+
+When shoes, bag, belt, or outerwear are not among uploaded images, say "建议补" or "如果你有" instead of implying the user uploaded them.
+
+## Multi-Image Visual Prompt Checklist
+
+Before image generation, include:
+
+- selected uploaded item ids and fidelity locks
+- backup item ids, if shown
+- avoided item ids and why they should not appear in the central outfit
+- missing suggested pieces clearly marked as suggested additions
+- explicit rule: central outfit may include only selected uploaded items plus clearly suggested missing pieces
+- explicit rule: avoid unrelated background props such as drinks, phones, notebooks, receipts, wallets, mini photos, or extra people
 
 ## Wardrobe Item Fidelity
 
