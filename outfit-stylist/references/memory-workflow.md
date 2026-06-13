@@ -86,6 +86,132 @@ For photo-derived items, keep uncertainty:
 
 Never claim exact brand, authenticity, size, price, or material unless the user provided it.
 
+## Wardrobe Scale Strategy
+
+The portable skill does not impose a hard storage limit. Practical capacity depends on the host runtime, but the reasoning workflow should treat wardrobe memory by scale:
+
+| Scale | Item count | Strategy |
+| --- | ---: | --- |
+| Light wardrobe | 1-50 items | Directly scan relevant items after basic season/category filtering. |
+| Standard wardrobe | 51-200 items | Use retrieval: filter by season, category, formality, scenario, and comfort before reasoning. |
+| Large wardrobe | 201+ items | Never load all items into the prompt. Use summaries, tags, favorites, recent items, and retrieval batches. |
+
+For outfit-history memory:
+
+| Scale | Outfit count | Strategy |
+| --- | ---: | --- |
+| Light history | 1-30 outfits | Keep recent successful combinations available. |
+| Standard history | 31-100 outfits | Retrieve by scenario, season, and user feedback. |
+| Large history | 101+ outfits | Keep only summaries, favorites, failures, and recent outfits in active context. Archive the rest. |
+
+## Wardrobe Retrieval Order
+
+When wardrobe memory contains more than a few items, retrieve in this order:
+
+```text
+1. scenario and dress code
+2. season, weather, and temperature
+3. required categories, such as top/bottom/shoes/outerwear/bag
+4. user comfort constraints
+5. formality fit
+6. color and material compatibility
+7. fit/proportion constraints
+8. user feedback, favorites, and avoid notes
+9. recency and outfit repetition preference
+```
+
+Do not load every saved item into the reasoning prompt. Build a small candidate set first:
+
+```yaml
+candidate_set:
+  tops: 3-8
+  bottoms: 3-8
+  shoes: 2-5
+  outerwear: 0-4
+  bags_accessories: 0-5
+```
+
+If the candidate set is still too large, keep:
+
+- items marked favorite or high-confidence
+- items that match the current scenario
+- items with positive feedback in similar weather or occasion
+- items the user has not worn too recently, unless they are reliable basics
+
+## Wardrobe Summary Records
+
+For standard or large wardrobes, keep compact summaries so the agent can reason without loading every item:
+
+```yaml
+wardrobe_summary:
+  category_counts:
+    tops: 0
+    bottoms: 0
+    shoes: 0
+    outerwear: 0
+    bags: 0
+  dominant_colors: []
+  missing_basics: []
+  high_use_items: []
+  occasion_ready_sets: []
+  frequent_risks: []
+```
+
+Use summaries to decide what to retrieve, not as a replacement for item fidelity when generating outfit boards.
+
+## Outfit Combination Memory
+
+Save only useful outfit combinations:
+
+```yaml
+outfit_memory:
+  id: ""
+  scenario: ""
+  season: []
+  weather_tags: []
+  formality: ""
+  item_ids: []
+  why_it_worked: ""
+  user_feedback: ""
+  repeatability: low_medium_high
+  last_worn: ""
+  avoid_repeating_until: ""
+```
+
+Store combinations when:
+
+- the user says they liked or wore the outfit
+- the outfit solved a recurring scenario
+- the combination exposed a reusable rule, such as "soft blazer + knit + loafers works for client visits"
+- the user asks to save it
+
+Do not save every generated recommendation automatically. Unworn suggestions can remain temporary unless the user wants them saved.
+
+## Active Context Budget
+
+For normal recommendations, keep memory context small:
+
+```text
+profile summary: 3-8 lines
+wardrobe candidates: 10-25 items
+outfit history: 3-8 relevant combinations
+avoid notes: 3-8 high-impact notes
+```
+
+For urgent requests, use fewer items and prioritize reliable basics. For detailed wardrobe planning, retrieve more items in batches and summarize between passes.
+
+## Archiving And Cleanup
+
+Archive rather than delete when possible:
+
+- low-confidence photo-derived items the user never confirms
+- duplicate items with nearly identical attributes
+- old combinations with no positive feedback
+- seasonal items outside the current season, unless the user asks for full wardrobe planning
+- items marked damaged, donated, sold, or no longer worn
+
+When duplicates appear, merge only after asking or when the user explicitly confirms they are the same item.
+
 ## Linking Profile And Wardrobe
 
 When making a recommendation from memory:

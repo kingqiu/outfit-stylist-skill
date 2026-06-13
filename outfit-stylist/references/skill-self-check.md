@@ -55,6 +55,9 @@ Run this checklist before publishing, installing into another agent, or making a
 - Profile initialization explains why questions are asked, how many questions will be asked, optional skipping, and local/private storage expectations.
 - Profile memory stores only user-provided preferences and practical constraints.
 - Wardrobe memory stores only user-provided or image-visible garment attributes.
+- Wardrobe memory has a scale strategy for light, standard, and large wardrobes.
+- Large wardrobes use retrieval, summaries, favorites, recent items, and archives instead of loading every item.
+- Outfit combinations are saved only when worn, liked, saved, or explicitly approved.
 - Do not infer sensitive identity, body judgments, attractiveness, exact brand, size, or health information from photos.
 - When memory is unavailable, keep personalization within the current conversation and say so only when relevant.
 
