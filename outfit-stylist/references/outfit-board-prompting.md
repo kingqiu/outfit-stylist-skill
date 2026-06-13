@@ -174,7 +174,7 @@ Lower-half refinement: trouser hem and shoes should look elegant and proportiona
 Header refinement: title should be moderately sized with breathing room; scene and reason chips should be slim and soft, with muted colors and no heavy dark filled boxes.
 Menswear fit refinement: avoid short cropped trousers or excessive ankle exposure in business scenes; prefer clean full-length trousers with a slight break over polished leather shoes.
 Naturalness refinement: avoid perfectly rigid symmetry and evenly boxed card grids. Use subtle card overlap, tape, varied card sizes, left-side notes, and asymmetric spacing to create a more human editorial page.
-Scene refinement: a soft background atmosphere is fine, but do not add extra people, friend photos, decorative mini photo prints, drinks, dining props, phones, notebooks, wallets, receipts, or unrelated lifestyle snapshots in default boards.
+Scene refinement: a soft background atmosphere is fine, but do not add extra people, friend photos, decorative mini photo prints, drinks, bottles, bar shelves, dining props, phones, notebooks, wallets, receipts, or unrelated lifestyle snapshots in default boards.
 Wardrobe fidelity: if an item comes from the user's uploaded images, preserve its category, length, color, silhouette, and key details exactly enough to be recognizable. Do not modify uploaded garments for convenience or aesthetics.
 
 Required Chinese text on image:

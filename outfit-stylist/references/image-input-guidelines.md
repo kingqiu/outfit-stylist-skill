@@ -111,6 +111,42 @@ Before image generation, include:
 - explicit rule: central outfit may include only selected uploaded items plus clearly suggested missing pieces
 - explicit rule: avoid unrelated background props such as drinks, phones, notebooks, receipts, wallets, mini photos, or extra people
 
+## Outfit Diagnosis
+
+Use this when the user provides or implies a proposed outfit combination and asks whether it is reasonable, such as:
+
+- "这几件搭在一起合理吗？"
+- "我想这样穿，你帮我看看。"
+- "这套哪里不对？"
+- "帮我诊断一下这套搭配。"
+
+Do not immediately replace the outfit. First diagnose the proposed combination.
+
+Diagnosis order:
+
+```text
+proposed items
+-> occasion fit
+-> formality consistency
+-> color relationship
+-> proportion and silhouette
+-> material/season comfort
+-> one or two minimal fixes
+```
+
+Default output:
+
+- clear verdict: `可以穿 / 可以但要调整 / 不建议这样穿`
+- what works
+- what feels off
+- minimal fix: change 1-2 pieces only
+- avoid note
+- outfit-board image of the corrected version when image output is available
+
+If the user has not specified the intended occasion, ask only when it materially changes the diagnosis. Otherwise give a general diagnosis and state the assumption.
+
+For uploaded items, preserve item fidelity. If the fix changes an uploaded item, say exactly which uploaded item is being swapped out and why.
+
 ## Wardrobe Item Fidelity
 
 When the user uploads clothing images, selected items must stay visually faithful in recommendations and generated outfit boards.

@@ -94,6 +94,32 @@ Use "方案一/方案二/方案三" only when the user explicitly asks for multi
 - ...
 ```
 
+## Outfit Diagnosis
+
+Use this when the user asks whether a proposed outfit works.
+
+```markdown
+## 搭配诊断
+
+**结论：可以穿 / 可以但要调整 / 不建议这样穿。**  
+一句话说明这套在当前场合里的主要问题或优势。
+
+### 成立的地方
+...
+
+### 需要调整的地方
+...
+
+### 最小修改
+只改 1-2 个关键点：
+...
+
+## 穿搭雷区
+- ...
+```
+
+For diagnosis, do not pretend every outfit is good. Give a clear verdict, but explain tradeoffs without scolding. The best answer often changes only one piece rather than rebuilding the entire outfit.
+
 ## Tone
 
 - Explain tradeoffs, not judgments.

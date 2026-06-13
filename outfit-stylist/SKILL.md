@@ -1,6 +1,6 @@
 ---
 name: outfit-stylist
-description: Practical outfit styling advisor for daily dressing decisions. Use when the user asks what to wear for an occasion or weather, wants 2-3 complete outfit plans, uploads or describes clothing items for styling, asks to combine multiple clothing photos, wants wardrobe-based outfit planning, requests an outfit board/styling board image, or needs concise Chinese outfit advice based on profile, comfort, occasion, available clothes, and desired impression.
+description: Practical outfit styling advisor for daily dressing decisions. Use when the user asks what to wear for an occasion or weather, wants 2-3 complete outfit plans, uploads or describes clothing items for styling, asks whether a proposed outfit combination works, asks to diagnose or improve a set of clothing photos, asks to combine multiple clothing photos, wants wardrobe-based outfit planning, requests an outfit board/styling board image, or needs concise Chinese outfit advice based on profile, comfort, occasion, available clothes, and desired impression.
 ---
 
 # Outfit Stylist
@@ -32,6 +32,7 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 1. Identify the mode:
    - Scenario outfit: user asks what to wear for a specific occasion/weather.
    - Single-item styling: user provides one garment or accessory to style.
+   - Outfit diagnosis: user provides or implies a proposed combination and asks whether it works.
    - Multi-image combination: user provides several clothing images/items to combine.
    - Wardrobe outfit planning: user wants outfits from existing clothes.
    - Outfit board: user requests visual output.
@@ -94,6 +95,7 @@ Use these assets as output scaffolds when helpful:
 - `assets/templates/model-capabilities.yaml`
 - `assets/templates/scenario-outfit.md`
 - `assets/templates/item-styling.md`
+- `assets/templates/outfit-diagnosis.md`
 - `assets/templates/multi-image-combination.md`
 - `assets/templates/structured-ootd-styling-card.md`
 - `assets/templates/wardrobe-outfit.md`

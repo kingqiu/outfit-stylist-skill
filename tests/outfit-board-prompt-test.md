@@ -540,3 +540,49 @@ Decision:
 - Fidelity locks worked and should be mandatory for multi-image boards.
 - Multi-image logic needs explicit `use / backup / avoid for this occasion` item status before generating the board.
 - Missing shoes/bags should be labeled as suggested additions, not treated as uploaded inventory.
+
+## Scenario 6: Outfit Diagnosis
+
+Prompt:
+
+> 这几件搭在一起参加商务聚会合理吗：图 1 深绿色短袖针织 + 图 2 侧边条纹长裤 + 图 3 米白轻薄马甲？
+
+Text recommendation tested:
+
+```markdown
+## 搭配诊断
+
+**结论：可以穿出一点记忆点，但这套不建议原样去商务聚会。**  
+问题不在绿色针织和米白马甲，而在图 2 这条侧边条纹裤太运动，会把整体从商务聚会拉回居家/运动休闲。
+
+### 成立的地方
+- 图 1 深绿色针织有质感和识别度，适合轻社交。
+- 图 3 米白马甲可以提亮，也能让上半身有层次。
+
+### 需要调整的地方
+- 图 2 侧边条纹长裤的运动感太强，和商务聚会的谈话、社交场景不够一致。
+
+### 最小修改
+只换裤子：把图 2 换成图 4 米白长裤，再配深色乐福鞋和深色简洁包。这样保留绿色针织的亮点，但整体会更得体。
+
+## 穿搭雷区
+- 不建议把侧边条纹裤放进这套商务聚会主方案；它更适合居家、运动休闲或非常熟的朋友局。
+```
+
+Saved output: `tests/visual-outputs/scenario-6-outfit-diagnosis-business-social-v1.png`
+Output size: 941 x 1672 px, close to 9:16
+
+QA:
+
+- Pass: diagnosis mode gives a clear verdict before rebuilding the outfit.
+- Pass: identifies what works and what does not work.
+- Pass: uses minimal fix: only replace the sporty side-stripe pants with the cream full-length trousers.
+- Pass: avoided side-stripe pants are shown as not recommended, not worn on the central outfit.
+- Pass: uploaded item fidelity is preserved for the corrected outfit.
+- Watch: background still suggests a bar/restaurant with bottles; default boards should avoid bar shelves, bottles, drinks, and dining props unless explicitly requested.
+
+Decision:
+
+- Add `Outfit Diagnosis` as a formal mode.
+- Diagnosis should not immediately replace the outfit; it must first judge whether the proposed combination works.
+- Default diagnosis output is: verdict, what works, what needs adjustment, minimal fix, avoid note, and corrected outfit-board image.
