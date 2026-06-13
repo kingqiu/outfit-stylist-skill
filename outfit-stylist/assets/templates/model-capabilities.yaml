@@ -1,4 +1,15 @@
 model_capabilities:
+  reasoning:
+    enabled: false
+    provider: "" # openai | gemini | minimax | zhipu | deepseek | custom
+    model: ""
+    adapter: "" # openai_compatible | anthropic_compatible | native_api | custom
+    endpoint_env: ""
+    auth_type: "" # api_key | ak_sk | oauth | custom
+    api_key_env: ""
+    supports_thinking: null
+    supports_tools: null
+    notes: ""
   image_input:
     enabled: false
     provider: "" # minimax | deepseek | gemini | openai | custom
@@ -37,6 +48,63 @@ model_capabilities:
     notes: ""
 
 provider_examples:
+  reasoning:
+    minimax_m3:
+      provider: "minimax"
+      model: "MiniMax-M3"
+      adapter: "openai_compatible"
+      endpoint_env: "MINIMAX_API_BASE"
+      auth_type: "api_key"
+      api_key_env: "MINIMAX_API_KEY"
+      supports_thinking: true
+      supports_tools: true
+      compatibility:
+        - "openai"
+        - "anthropic"
+      notes: "Preferred MiniMax reasoning model for long-context outfit decisions and structured wardrobe reasoning."
+    minimax_m27_highspeed:
+      provider: "minimax"
+      model: "MiniMax-M2.7-highspeed"
+      adapter: "openai_compatible"
+      endpoint_env: "MINIMAX_API_BASE"
+      auth_type: "api_key"
+      api_key_env: "MINIMAX_API_KEY"
+      supports_thinking: null
+      supports_tools: true
+      notes: "Lower-latency MiniMax reasoning fallback when configured."
+    zhipu_glm46:
+      provider: "zhipu"
+      model: "glm-4.6"
+      adapter: "native_api"
+      endpoint_env: "ZHIPU_API_BASE"
+      default_endpoint: "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+      auth_type: "api_key"
+      api_key_env: "ZHIPU_API_KEY"
+      supports_thinking: true
+      supports_tools: true
+      notes: "Preferred GLM reasoning model for Chinese-first outfit explanations and scenario judgment."
+    zhipu_glm45:
+      provider: "zhipu"
+      model: "glm-4.5"
+      adapter: "native_api"
+      endpoint_env: "ZHIPU_API_BASE"
+      default_endpoint: "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+      auth_type: "api_key"
+      api_key_env: "ZHIPU_API_KEY"
+      supports_thinking: true
+      supports_tools: true
+      notes: "Agent-oriented GLM fallback with thinking/non-thinking mode support."
+    zhipu_glm47_flash:
+      provider: "zhipu"
+      model: "glm-4.7-flash"
+      adapter: "native_api"
+      endpoint_env: "ZHIPU_API_BASE"
+      default_endpoint: "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+      auth_type: "api_key"
+      api_key_env: "ZHIPU_API_KEY"
+      supports_thinking: null
+      supports_tools: true
+      notes: "Fast/cost-conscious GLM reasoning option when configured."
   image_output:
     openai:
       provider: "openai"

@@ -41,7 +41,7 @@ Do not make `agents/openai.yaml` required for runtime behavior. Treat it as Code
 - Do not hardcode absolute paths.
 - Do not hardcode model providers, API keys, endpoints, or credentials.
 - Keep image input and image output model configuration provider-neutral.
-- Support separate provider configuration for image input and image output. Examples include MiniMax/DeepSeek/Gemini/OpenAI/custom for image input and GPT-image-2/Gemini banana/Jimeng/custom for image output.
+- Support separate provider configuration for reasoning, image input, and image output. Examples include MiniMax/Zhipu GLM/DeepSeek/Gemini/OpenAI/custom for reasoning, MiniMax/DeepSeek-compatible/Gemini/OpenAI/custom for image input, and GPT-image-2/Gemini banana/MiniMax/Jimeng/custom for image output.
 - Treat provider-specific API wiring as an adapter layer owned by the host agent/runtime, not by the portable skill instructions.
 - Support both simple API-key providers and signed-request providers such as Jimeng/Volcengine. Store only environment variable names in the skill.
 - Use plain Markdown, YAML, and text templates.
@@ -93,6 +93,9 @@ Before publishing or moving the skill between agents, verify:
 
 Each host agent may expose image capabilities differently. The portable skill only requires the host to map local capabilities into `model_capabilities`:
 
+- `reasoning.enabled`: whether the host exposes a dedicated chat/reasoning model for outfit decisions.
+- `reasoning.provider/model`: the configured reasoning provider, such as MiniMax M3, Zhipu GLM, DeepSeek, Gemini, OpenAI, or custom.
+- `reasoning.adapter`: the host's chat adapter, such as `openai_compatible`, `anthropic_compatible`, `native_api`, or `custom`.
 - `image_input.enabled`: whether the host can inspect clothing images.
 - `image_input.provider/model`: the configured vision provider, such as MiniMax, DeepSeek-compatible multimodal endpoint, Gemini, OpenAI, or custom.
 - `image_output.enabled`: whether the host can generate outfit-board images.

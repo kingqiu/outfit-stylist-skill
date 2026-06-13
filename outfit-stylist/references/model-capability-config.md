@@ -6,6 +6,17 @@ Keep styling reasoning separate from image model availability. Image input and i
 
 ```yaml
 model_capabilities:
+  reasoning:
+    enabled: false
+    provider: "" # openai | gemini | minimax | zhipu | deepseek | custom
+    model: ""
+    adapter: "" # openai_compatible | anthropic_compatible | native_api | custom
+    endpoint_env: ""
+    auth_type: "" # api_key | ak_sk | oauth | custom
+    api_key_env: ""
+    supports_thinking: null
+    supports_tools: null
+    notes: ""
   image_input:
     enabled: false
     provider: "" # minimax | deepseek | gemini | openai | custom
@@ -47,6 +58,19 @@ model_capabilities:
 ## Required Provider Coverage For V1
 
 The configuration layer must support at least these provider families without making any one of them mandatory:
+
+### Reasoning
+
+The reasoning model handles outfit decisions after user context, wardrobe items, visual inventory, weather, scenario, and constraints have been normalized. It should not be conflated with image input or image output.
+
+| Provider family | Use for | Notes |
+| --- | --- | --- |
+| `openai` | Default reasoning when available | Optional host default for final recommendation logic. |
+| `gemini` | Multimodal-aware reasoning and large-context wardrobe planning | Useful when the same provider is also used for image understanding. |
+| `minimax` | Long-context multimodal reasoning and agent workflows | Official MiniMax Chat Completions support `MiniMax-M3` and M2.x model families; M3 supports text, image, video, tools, and thinking-style content. |
+| `zhipu` / GLM | Chinese reasoning, agent-style planning, and API-accessible GLM models | Use Zhipu/BigModel chat completions for GLM-4.6, GLM-4.5, GLM-4.7-Flash, GLM-5.x, or configured local availability. |
+| `deepseek` | Reasoning over structured clothing inventories | Do not use for raw image inspection unless the host has a separate vision adapter. |
+| `custom` | Any compatible chat/reasoning backend | Must accept the structured outfit decision payload and return concise Chinese advice plus image prompt fields. |
 
 ### Image Output
 
@@ -101,11 +125,117 @@ These notes reflect official provider documentation checked on 2026-06-13. Becau
 | Google Gemini image generation | https://ai.google.dev/gemini-api/docs/image-generation | "Nano Banana" is the official Gemini native image-generation family. Prefer `gemini-3-pro-image` for complex, polished outfit boards; use `gemini-3.1-flash-image` or `gemini-2.5-flash-image` for speed/cost. |
 | Google Gemini image understanding | https://ai.google.dev/gemini-api/docs/image-understanding | Good default for multi-image wardrobe inspection. Supports inline image data for smaller requests and File API for larger/reused images. |
 | MiniMax API | https://platform.minimax.io/docs/api-reference/api-overview | MiniMax exposes language, speech, video, image, music, and file APIs. |
+| MiniMax OpenAI-compatible chat | https://platform.minimax.io/docs/api-reference/text-chat-openai | Chat Completions support `MiniMax-M3`, `MiniMax-M2.7`, `MiniMax-M2.7-highspeed`, `MiniMax-M2.5`, and related models. |
+| MiniMax Anthropic-compatible chat | https://platform.minimax.io/docs/api-reference/text-chat-anthropic | MiniMax-M3 supports multimodal input, tool use, and thinking content blocks in Anthropic-compatible format. |
+| MiniMax text generation guide | https://platform.minimax.io/docs/guides/text-generation | MiniMax-M3 is positioned for long-context agentic reasoning and structured task execution. |
 | MiniMax image generation | https://platform.minimax.io/docs/api-reference/image-generation-t2i | MiniMax supports text-to-image through `/v1/image_generation`; image-to-image uses the same image generation family. |
 | MiniMax M3 multimodal input | https://platform.minimax.io/docs/api-reference/text-chat-anthropic | `MiniMax-M3` supports text, image, and video input through Anthropic-compatible content blocks. |
 | MiniMax image understanding for agents | https://platform.minimaxi.com/docs/token-plan/openclaw | For OpenClaw-style environments, use `mmx vision describe --image <path-or-url>` or MiniMax MCP `understand_image` as the image-input adapter. |
 | DeepSeek API | https://api-docs.deepseek.com/ | Official DeepSeek API is OpenAI/Anthropic-compatible for text/reasoning chat. Do not list it as a guaranteed native vision provider. |
 | DeepSeek models/pricing | https://api-docs.deepseek.com/quick_start/pricing | Current official model families include `deepseek-v4-flash` and `deepseek-v4-pro`; use them for reasoning over extracted clothing inventories, not raw image inspection unless a vision adapter is separately supplied. |
+| Zhipu / BigModel chat completions | https://docs.bigmodel.cn/api-reference/%E6%A8%A1%E5%9E%8B-api/%E5%AF%B9%E8%AF%9D%E8%A1%A5%E5%85%A8 | BigModel chat completions support text, image, audio, video, file inputs, streaming/non-streaming output, tools, and sampling controls. |
+| Zhipu HTTP API guide | https://docs.bigmodel.cn/cn/guide/develop/http/introduction | Standard REST API; common endpoint is `https://open.bigmodel.cn/api/paas/v4/chat/completions` with bearer-token authorization. |
+| GLM-4.6 | https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6 | Text-output model with improved reasoning, tool use, long context, and Chinese writing quality. |
+| GLM-4.5 | https://docs.bigmodel.cn/cn/guide/models/text/glm-4.5 | Agent-oriented GLM model family with thinking and non-thinking modes. |
+
+## Reasoning Model Adapter Notes
+
+The reasoning adapter should receive a structured outfit decision payload rather than raw, unorganized user text whenever possible:
+
+```yaml
+reasoning_input:
+  user_profile: {}
+  scenario:
+    occasion: ""
+    date_time: ""
+    weather: ""
+    formality: ""
+  wardrobe_inventory: []
+  selected_items: []
+  constraints:
+    comfort: []
+    body_fit: []
+    avoid: []
+  output_requirements:
+    language: "zh-CN"
+    mobile_length: "short"
+    image_board_required: true
+```
+
+It should return:
+
+```yaml
+reasoning_output:
+  recommendation_summary: ""
+  selected_outfit: []
+  why_it_works: []
+  risk_to_avoid: []
+  image_prompt_brief: ""
+  fidelity_locks: []
+```
+
+Keep the reasoning output compact. The final user-facing answer should usually be a short Chinese text recommendation plus a generated outfit board image.
+
+## MiniMax Reasoning Adapter Notes
+
+Recommended MiniMax reasoning config:
+
+```yaml
+provider: "minimax"
+model: "MiniMax-M3"
+adapter: "openai_compatible | anthropic_compatible"
+endpoint_env: "MINIMAX_API_BASE"
+auth_type: "api_key"
+api_key_env: "MINIMAX_API_KEY"
+supports_thinking: true
+supports_tools: true
+```
+
+Model selection:
+
+- `MiniMax-M3`: preferred default for outfit reasoning when MiniMax is configured; use it for long wardrobe context, multimodal-aware reasoning, and agent-style structured decisions.
+- `MiniMax-M2.7` or `MiniMax-M2.7-highspeed`: use when the host prefers lower latency or cost.
+- `MiniMax-M2.5` or related M2.x variants: keep as fallback options only when explicitly configured.
+
+Operational notes:
+
+- Use OpenAI-compatible Chat Completions when the host already uses OpenAI-style clients.
+- Use Anthropic-compatible Messages when the host uses Claude-style adapters or needs thinking/tool content blocks.
+- The reasoning step may be text-only if image input has already produced `wardrobe_inventory`; do not resend raw images unless the MiniMax adapter is intentionally handling both vision and reasoning.
+
+## Zhipu GLM Reasoning Adapter Notes
+
+Recommended Zhipu/GLM reasoning config:
+
+```yaml
+provider: "zhipu"
+model: "glm-4.6"
+adapter: "native_api"
+endpoint_env: "ZHIPU_API_BASE"
+auth_type: "api_key"
+api_key_env: "ZHIPU_API_KEY"
+supports_thinking: true
+supports_tools: true
+```
+
+Default endpoint:
+
+```text
+https://open.bigmodel.cn/api/paas/v4/chat/completions
+```
+
+Model selection:
+
+- `glm-4.6`: preferred for Chinese styling explanation, long-context reasoning, and tool-aware workflows when available.
+- `glm-4.5`: strong agent-oriented fallback with thinking/non-thinking mode support.
+- `glm-4.7-flash`: use for lower-cost or faster first-pass recommendations when configured.
+- `glm-5.x`: allow newer GLM models through configuration when the host account exposes them.
+
+Operational notes:
+
+- Use bearer-token authorization via `ZHIPU_API_KEY`; never store the key in the skill.
+- GLM reasoning is useful for Chinese-first tone, scenario interpretation, and turning structured wardrobe inventory into natural advice.
+- If the GLM model supports multimodal input in the host account, it may also handle image input, but keep that capability separate from the reasoning role in `model_capabilities`.
 
 ## OpenAI Adapter Notes
 
