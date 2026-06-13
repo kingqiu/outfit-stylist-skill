@@ -7,6 +7,8 @@ Mode: built-in image generation preview
 Saved output: `tests/visual-outputs/scenario-1-business-outfit-board-v1.png`
 Output size: 941 x 1672 px, close to 9:16
 
+Note: visual outputs are local-only test artifacts and are ignored by Git. Filenames are kept here for local comparison, but generated images should not be committed.
+
 ## Source Outfit
 
 - Scene: Shanghai, first meeting with a traditional-industry client, 18-24°C, light wind.

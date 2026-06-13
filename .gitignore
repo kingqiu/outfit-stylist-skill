@@ -4,3 +4,5 @@
 *.log
 tmp/
 
+# Generated visual test outputs
+tests/visual-outputs/

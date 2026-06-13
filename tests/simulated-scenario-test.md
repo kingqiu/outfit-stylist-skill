@@ -10,6 +10,7 @@ Status: first self-test after initial skill build
 - This is a document-level simulation, not a live model invocation.
 - Image input/output are treated as unavailable unless the prompt gives enough clothing details in text.
 - The goal is to test recommendation structure, mobile readability, fallback behavior, and whether the skill avoids heavy image diagnosis.
+- Generated visual outputs are local-only test artifacts and should not be committed to GitHub.
 
 ## Evaluation Criteria
 
