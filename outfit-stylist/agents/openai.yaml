@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 穿搭顾问"
+  short_description: "Mobile-first outfit styling recommendations"
+  default_prompt: "Use $outfit-stylist to recommend 2-3 outfits for tomorrow based on my occasion, weather, preferences, and available clothes."

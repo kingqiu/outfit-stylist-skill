@@ -1,4 +1,4 @@
-# Style Strategist Skill Market Scan
+# Outfit Stylist Skill Market Scan
 
 Date: 2026-06-13
 
@@ -14,7 +14,7 @@ In other words: apps manage closets; this Skill should manage judgment.
 
 ## Starting Context
 
-The existing "小龙虾穿搭顾问" concept defines a 4-step loop:
+The existing "AI 穿搭顾问" concept defines a 4-step loop:
 
 1. Build a basic user model from preferences, skin tone, height, weight, and constraints.
 2. Build a wardrobe database from user clothing photos or records.
@@ -101,15 +101,15 @@ Sources:
 
 Position the Skill as:
 
-> AI 形象顾问 Skill: a structured style decision workflow for everyday users who want to improve personal image without immediately buying more clothes or installing a full wardrobe app.
+> AI 穿搭顾问 Skill: a structured outfit decision workflow for everyday users who need practical, scenario-specific outfit plans based on weather, occasion, preferences, comfort constraints, and available clothing.
 
 Primary promise:
 
-- make the user clearer about their image goal
-- reduce wrong purchases
-- reuse existing wardrobe better
-- produce scenario-specific, explainable recommendations
-- create shareable before/after plans for Xiaohongshu validation
+- produce 2-3 complete outfit options for a concrete occasion
+- style one uploaded item into usable looks
+- combine multiple uploaded clothing images into outfit plans
+- reuse existing wardrobe before suggesting purchases
+- explain the tradeoffs behind each recommendation
 
 ## Differentiation
 
@@ -127,7 +127,7 @@ Do not start with "AI 穿搭 App".
 
 Start with:
 
-> "上传/描述你今天的场景、衣服和目标印象，我帮你做一次像真人形象顾问一样的判断：穿什么、为什么、哪里要改、不要买什么。"
+> "告诉我明天的场合、天气和你手上有哪些衣服，或直接上传衣服图片。我帮你组合 2-3 套可穿方案：穿什么、为什么、哪里可能翻车、怎么临时修正。"
 
 This is small enough for a Skill, strong enough for Xiaohongshu, and expandable into wardrobe/app features later.
 
@@ -135,10 +135,10 @@ This is small enough for a Skill, strong enough for Xiaohongshu, and expandable 
 
 Build a Skill with 4 modes:
 
-1. `diagnose`: build personal image profile from text and optional photos.
-2. `outfit`: recommend an outfit for a specific scenario using available clothing.
-3. `item-check`: judge whether a candidate item is worth buying or how to style it.
-4. `wardrobe-audit`: identify wardrobe gaps, repeats, idle items, and next 3 improvements.
+1. `scenario-outfit`: recommend 2-3 complete outfits for a specific occasion.
+2. `item-styling`: style one uploaded or described clothing item.
+3. `multi-image-combination`: combine multiple clothing photos into outfit plans.
+4. `wardrobe-outfit`: build outfits from available wardrobe items first.
 
 Do not build:
 
@@ -149,4 +149,3 @@ Do not build:
 - monetization system
 
 Those are later layers.
-

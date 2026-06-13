@@ -1,0 +1,22 @@
+model_capabilities:
+  image_input:
+    enabled: false
+    provider: ""
+    model: ""
+    supported_inputs:
+      - clothing_photo
+      - outfit_photo
+      - multi_item_photo_set
+    notes: ""
+  image_output:
+    enabled: false
+    provider: ""
+    model: ""
+    default_output: outfit_board
+    default_aspect_ratio: "9:16"
+    fallback_aspect_ratio: "3:4"
+    long_image_aspect_ratio: "9:21"
+    supported_outputs:
+      - outfit_board
+      - styling_board
+    notes: ""

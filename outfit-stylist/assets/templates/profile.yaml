@@ -1,0 +1,24 @@
+outfit_profile:
+  gender_expression: ""
+  age_range: ""
+  height_cm: null
+  weight_kg: null
+  city_or_climate: ""
+  common_scenarios: []
+  comfort_profile:
+    preferred_materials: []
+    avoided_materials: []
+    fit_preferences: []
+    shoe_constraints: []
+    exposure_limits: []
+  lifestyle:
+    work_context: ""
+    commute: ""
+  preferences:
+    liked_styles: []
+    disliked_styles: []
+    color_preferences: []
+    budget_range: ""
+  intent_profile:
+    target_impression: []
+    avoid_impression: []
