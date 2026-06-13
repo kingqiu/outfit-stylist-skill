@@ -1,17 +1,30 @@
 model_capabilities:
   image_input:
     enabled: false
-    provider: ""
+    provider: "" # minimax | deepseek | gemini | openai | custom
     model: ""
+    adapter: "" # api | cli | mcp | custom
+    endpoint_env: ""
+    auth_type: "" # api_key | ak_sk | oauth | custom
+    api_key_env: ""
+    access_key_env: ""
+    secret_key_env: ""
     supported_inputs:
       - clothing_photo
       - outfit_photo
       - multi_item_photo_set
+    max_images_per_request: null
     notes: ""
   image_output:
     enabled: false
-    provider: ""
+    provider: "" # openai | gemini | minimax | jimeng | custom
     model: ""
+    adapter: "" # api | cli | mcp | custom
+    endpoint_env: ""
+    auth_type: "" # api_key | ak_sk | oauth | custom
+    api_key_env: ""
+    access_key_env: ""
+    secret_key_env: ""
     default_output: outfit_board
     default_aspect_ratio: "9:16"
     fallback_aspect_ratio: "3:4"
@@ -19,4 +32,128 @@ model_capabilities:
     supported_outputs:
       - outfit_board
       - styling_board
+    supports_reference_images: null
+    supports_chinese_text_rendering: null
     notes: ""
+
+provider_examples:
+  image_output:
+    openai:
+      provider: "openai"
+      model: "gpt-image-2"
+      adapter: "api"
+      auth_type: "api_key"
+      api_key_env: "OPENAI_API_KEY"
+      preferred_orientation: "portrait"
+      supports_reference_images: true
+      supports_chinese_text_rendering: true
+    gemini_banana:
+      provider: "gemini"
+      model: "gemini-3-pro-image"
+      model_aliases:
+        nano_banana_pro: "gemini-3-pro-image"
+        nano_banana_2: "gemini-3.1-flash-image"
+        nano_banana: "gemini-2.5-flash-image"
+      adapter: "api"
+      auth_type: "api_key"
+      api_key_env: "GEMINI_API_KEY"
+      supports_reference_images: true
+      supports_chinese_text_rendering: true
+    minimax_image:
+      provider: "minimax"
+      model: "image-01"
+      adapter: "api"
+      endpoint_env: "MINIMAX_API_HOST"
+      auth_type: "api_key"
+      api_key_env: "MINIMAX_API_KEY"
+      api_path: "/v1/image_generation"
+      default_aspect_ratio: "9:16"
+      preferred_orientation: "portrait"
+      supports_reference_images: true
+      supports_chinese_text_rendering: null
+    jimeng_seedream46:
+      provider: "jimeng"
+      model: "jimeng_seedream46_cvtob"
+      adapter: "api"
+      endpoint_env: "JIMENG_VISUAL_ENDPOINT"
+      auth_type: "ak_sk"
+      access_key_env: "VOLCENGINE_ACCESS_KEY_ID"
+      secret_key_env: "VOLCENGINE_SECRET_ACCESS_KEY"
+      region: "cn-north-1"
+      service: "cv"
+      action: "CVSync2AsyncSubmitTask"
+      version: "2022-08-31"
+      req_key: "jimeng_seedream46_cvtob"
+      supports_reference_images: true
+      supports_chinese_text_rendering: true
+    jimeng_t2i_v30:
+      provider: "jimeng"
+      model: "jimeng_t2i_v30"
+      adapter: "api"
+      endpoint_env: "JIMENG_VISUAL_ENDPOINT"
+      auth_type: "ak_sk"
+      access_key_env: "VOLCENGINE_ACCESS_KEY_ID"
+      secret_key_env: "VOLCENGINE_SECRET_ACCESS_KEY"
+      region: "cn-north-1"
+      service: "cv"
+      action: "CVSync2AsyncSubmitTask"
+      version: "2022-08-31"
+      req_key: "jimeng_t2i_v30"
+      supports_reference_images: false
+      supports_chinese_text_rendering: true
+  image_input:
+    openai:
+      provider: "openai"
+      model: "CONFIGURE_OPENAI_VISION_MODEL_ID"
+      adapter: "api"
+      auth_type: "api_key"
+      api_key_env: "OPENAI_API_KEY"
+      supported_file_types:
+        - "png"
+        - "jpeg"
+        - "jpg"
+        - "webp"
+        - "gif"
+    minimax:
+      provider: "minimax"
+      model: "MiniMax-M3"
+      adapter: "api"
+      endpoint_env: "MINIMAX_API_HOST"
+      auth_type: "api_key"
+      api_key_env: "MINIMAX_API_KEY"
+      supports_raw_image_input: true
+      compatibility:
+        - "openai"
+        - "anthropic"
+    minimax_agent_tool:
+      provider: "minimax"
+      model: "minimax-vision"
+      adapter: "cli_or_mcp"
+      auth_type: "api_key"
+      api_key_env: "MINIMAX_API_KEY"
+      cli_example: "mmx vision describe --image <path-or-url>"
+      mcp_tool: "understand_image"
+    deepseek:
+      provider: "deepseek"
+      model: "deepseek-v4-flash"
+      adapter: "api"
+      endpoint_env: "DEEPSEEK_API_BASE"
+      auth_type: "api_key"
+      api_key_env: "DEEPSEEK_API_KEY"
+      supports_raw_image_input: false
+      notes: "Use for reasoning over structured clothing inventories. Do not send raw images unless a separate DeepSeek-compatible vision endpoint is configured."
+    deepseek_compatible_vision:
+      provider: "deepseek"
+      model: "CONFIGURE_DEEPSEEK_COMPATIBLE_VISION_MODEL_ID"
+      adapter: "custom"
+      endpoint_env: "DEEPSEEK_COMPATIBLE_VISION_BASE"
+      auth_type: "api_key"
+      api_key_env: "DEEPSEEK_COMPATIBLE_VISION_API_KEY"
+      supports_raw_image_input: true
+      notes: "Optional host-provided multimodal endpoint, not guaranteed by official DeepSeek API."
+    gemini:
+      provider: "gemini"
+      model: "CONFIGURE_GEMINI_VISION_MODEL_ID"
+      adapter: "api"
+      auth_type: "api_key"
+      api_key_env: "GEMINI_API_KEY"

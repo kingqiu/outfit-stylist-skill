@@ -41,6 +41,9 @@ Do not make `agents/openai.yaml` required for runtime behavior. Treat it as Code
 - Do not hardcode absolute paths.
 - Do not hardcode model providers, API keys, endpoints, or credentials.
 - Keep image input and image output model configuration provider-neutral.
+- Support separate provider configuration for image input and image output. Examples include MiniMax/DeepSeek/Gemini/OpenAI/custom for image input and GPT-image-2/Gemini banana/Jimeng/custom for image output.
+- Treat provider-specific API wiring as an adapter layer owned by the host agent/runtime, not by the portable skill instructions.
+- Support both simple API-key providers and signed-request providers such as Jimeng/Volcengine. Store only environment variable names in the skill.
 - Use plain Markdown, YAML, and text templates.
 - Keep output templates under `assets/templates/` because they are reusable assets, not mandatory runtime logic.
 - If adding platform-specific files later, make them optional adapters rather than the source of truth.
@@ -85,3 +88,18 @@ Before publishing or moving the skill between agents, verify:
 - The skill works without image model configuration by using text fallback.
 - The skill works without generated images by using text outfit boards.
 - User-facing output defaults to Chinese.
+
+## Image Model Adapter Expectations
+
+Each host agent may expose image capabilities differently. The portable skill only requires the host to map local capabilities into `model_capabilities`:
+
+- `image_input.enabled`: whether the host can inspect clothing images.
+- `image_input.provider/model`: the configured vision provider, such as MiniMax, DeepSeek-compatible multimodal endpoint, Gemini, OpenAI, or custom.
+- `image_output.enabled`: whether the host can generate outfit-board images.
+- `image_output.provider/model`: the configured image provider, such as GPT-image-2, Gemini banana family, Jimeng, or custom.
+- `auth_type`: the host's authentication adapter, such as `api_key`, `ak_sk`, `oauth`, or `custom`.
+- `access_key_env` and `secret_key_env`: optional environment variable names for signed-request providers such as Jimeng/Volcengine.
+
+If a host cannot provide a capability, it should leave that section disabled and rely on the fallback behavior in `references/model-capability-config.md`.
+
+No agent should require `agents/openai.yaml` to understand image model configuration. It is display metadata only.
