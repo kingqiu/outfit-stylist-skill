@@ -14,7 +14,7 @@ In other words: apps manage closets; this Skill should manage judgment.
 
 ## Starting Context
 
-The existing "AI 穿搭顾问" concept defines a 4-step loop:
+The existing "穿衣搭子" concept defines a 4-step loop:
 
 1. Build a basic user model from preferences, skin tone, height, weight, and constraints.
 2. Build a wardrobe database from user clothing photos or records.
@@ -101,7 +101,7 @@ Sources:
 
 Position the Skill as:
 
-> AI 穿搭顾问 Skill: a structured outfit decision workflow for everyday users who need practical, scenario-specific outfit plans based on weather, occasion, preferences, comfort constraints, and available clothing.
+> 穿衣搭子 Skill: a structured outfit decision workflow for everyday users who need practical, scenario-specific outfit plans based on weather, occasion, preferences, comfort constraints, and available clothing.
 
 Primary promise:
 

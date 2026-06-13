@@ -11,11 +11,11 @@ Recommended skill name: `outfit-stylist`
 
 Chinese display name:
 
-- AI 穿搭顾问
+- 穿衣搭子
 
-Recommendation: use `outfit-stylist` as the Skill name and "AI 穿搭顾问" as the Chinese public-facing name.
+Recommendation: use `outfit-stylist` as the Skill name and "穿衣搭子" as the Chinese public-facing name.
 
-Reason: `outfit-stylist` is more concrete than `style-strategist` and easier to understand for a Skill focused on practical daily outfit recommendations. "AI 穿搭顾问" is clearer than "AI 时尚造型师" for ordinary users who need help deciding what to wear.
+Reason: `outfit-stylist` is concrete and easy to understand for agents, while "穿衣搭子" is warmer and more memorable for ordinary users who need help deciding what to wear. It feels like a daily outfit companion rather than a distant consultant.
 
 ## 2. Positioning
 
@@ -720,7 +720,7 @@ Before implementation, decide:
 Decided:
 
 - Skill name: `outfit-stylist`
-- Chinese public name: "AI 穿搭顾问"
+- Chinese public name: "穿衣搭子"
 - V1 supports image input as a core optional path.
 - V1 visual output defaults to outfit boards / styling boards, not real-person virtual try-on.
 - Image input and image output are separately configurable model capabilities.

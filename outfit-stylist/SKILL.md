@@ -9,7 +9,7 @@ description: Practical outfit styling advisor for daily dressing decisions. Use 
 
 Use this skill to turn a user's occasion, weather, preferences, and available clothes into practical outfit recommendations. Prioritize wearable daily decisions over abstract image diagnosis.
 
-The public-facing Chinese name is "AI 穿搭顾问". Default user-facing output should be Chinese unless the user asks otherwise.
+The public-facing Chinese name is "穿衣搭子". Default user-facing output should be Chinese unless the user asks otherwise.
 
 ## Core Principle
 
