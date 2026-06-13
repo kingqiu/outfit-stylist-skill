@@ -105,4 +105,23 @@ Each host agent may expose image capabilities differently. The portable skill on
 
 If a host cannot provide a capability, it should leave that section disabled and rely on the fallback behavior in `references/model-capability-config.md`.
 
+## OpenClaw Image-Output Prompt Contract
+
+OpenClaw hosts may route reasoning and image generation through different providers, such as MiniMax M3 for reasoning and Google Nano Banana Pro for image output. In that setup, the reasoning model must pass a complete compiled outfit-board prompt to the image tool.
+
+Do not pass a short image brief such as:
+
+```text
+Casual weekend outfit in light rain...
+```
+
+Instead, pass the full `Structured OOTD Styling Card` prompt from `references/outfit-board-prompting.md`.
+
+For Google image models:
+
+- `nano-banana-pro-preview` / Nano Banana Pro: use the full visual-spec prompt.
+- `gemini-2.5-flash-image` / Nano Banana fast draft: use the compact hard-layout prompt.
+- Always request a vertical `9:16` outfit board, not a single photorealistic model photo.
+- If reference garment images are available, pass them to the image tool and include fidelity locks in the prompt.
+
 No agent should require `agents/openai.yaml` to understand image model configuration. It is display metadata only.

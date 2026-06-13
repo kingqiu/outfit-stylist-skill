@@ -49,8 +49,9 @@ user request
 -> resolve profile and weather/occasion constraints
 -> reasoning payload
 -> selected outfit + backup adjustment + avoid section
+-> select image prompt profile from current image_output provider/model
 -> concise Chinese text recommendation
--> outfit-board prompt
+-> compiled outfit-board prompt, not a short image brief
 -> generated outfit board if image output is available
 ```
 
@@ -79,8 +80,9 @@ uploaded image
 -> lock anchor item fidelity
 -> combine with user scenario/profile
 -> reasoning model chooses supporting pieces
+-> select image prompt profile from current image_output provider/model
 -> concise Chinese text recommendation
--> outfit-board prompt with anchor fidelity locks
+-> compiled outfit-board prompt with anchor fidelity locks
 -> generated outfit board if image output is available
 ```
 
@@ -111,8 +113,9 @@ uploaded image set
 -> classify each item as use / backup / avoid for this occasion
 -> reasoning model selects one strongest outfit
 -> optional backup adjustment
+-> select image prompt profile from current image_output provider/model
 -> concise Chinese text recommendation
--> outfit-board prompt using selected items and fidelity locks
+-> compiled outfit-board prompt using selected items and fidelity locks
 -> generated outfit board if image output is available
 ```
 
@@ -151,8 +154,9 @@ proposed outfit by text or images
 -> inventory/parse proposed pieces
 -> diagnose before replacing
 -> reasoning model returns verdict and minimal fixes
+-> select image prompt profile from current image_output provider/model
 -> concise Chinese diagnosis
--> corrected outfit-board prompt
+-> compiled corrected outfit-board prompt
 -> generated outfit board if image output is available
 ```
 
@@ -212,12 +216,26 @@ Text recommendation should stay mobile-friendly:
 
 The outfit-board prompt should include:
 
+- the selected provider-aware prompt profile from `references/outfit-board-prompting.md`
 - scenario and weather
 - user profile essentials
 - selected outfit
 - one scenario prompt pack from `references/outfit-board-prompting.md`
 - one optional weather function pack when weather affects comfort or safety
 - anchor or wardrobe fidelity locks
+- the complete image prompt compiler contract from `references/outfit-board-prompting.md`
+- a provider-specific hard-layout prompt when using fast models such as Gemini 2.5 Flash Image
+
+Do not send a short image brief to the image model. A phrase such as "casual weekend dad outfit in light rain" is only an internal styling summary; it is not a valid outfit-board image prompt.
+
+Before image generation, run the prompt rejection rule:
+
+- If the prompt could produce a single person photo, rewrite it.
+- If it does not explicitly request a structured OOTD styling card / outfit board, rewrite it.
+- If it lacks Chinese text fields or numbered marker fallback, rewrite it.
+- If uploaded-item fidelity locks are missing, rewrite it.
+
+The image model should receive the final compiled prompt only.
 - Chinese labels
 - default `Structured OOTD Styling Card` template
 - hard exclusions from `references/outfit-board-prompting.md`

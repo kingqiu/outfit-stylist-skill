@@ -1,6 +1,6 @@
 ---
 name: outfit-stylist
-description: Practical outfit styling advisor for daily dressing decisions. Use when the user asks what to wear for an occasion or weather, wants 2-3 complete outfit plans, uploads or describes clothing items for styling, asks whether a proposed outfit combination works, asks to diagnose or improve a set of clothing photos, asks to combine multiple clothing photos, wants wardrobe-based outfit planning, requests an outfit board/styling board image, or needs concise Chinese outfit advice based on profile, comfort, occasion, available clothes, and desired impression.
+description: 日常穿衣搭配顾问。用于根据场合、天气、个人偏好和已有衣物给出简洁中文穿搭建议；支持单品搭配、多图衣橱组合、搭配诊断、衣橱规划、用户画像和竖版中文 OOTD 搭配板生成。
 ---
 
 # Outfit Stylist
@@ -112,6 +112,7 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
    - image input: for uploaded clothing/outfit photos
    - image output: for generated outfit boards
    - if a model layer is unavailable, use the fallback behavior in `references/model-capability-config.md` and continue.
+   - before writing the image prompt, select the provider-aware prompt profile for the configured image output model.
 3. Gather only missing essentials:
    - person: gender expression, age range, height/weight if relevant, comfort limits
    - weather: temperature, rain/snow, wind, indoor/outdoor changes
@@ -119,14 +120,15 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
    - clothes: available items by text or image
    - intent: target impression and impressions to avoid
 4. If images are present, convert them into a structured clothing inventory before choosing outfits.
-5. Run the styling decision through the reasoning path: choose the strongest outfit, backup adjustment, avoid section, and image prompt brief.
+5. Run the styling decision through the reasoning path: choose the strongest outfit, backup adjustment, avoid section, and compiled outfit-board prompt.
 6. Apply wardrobe-first logic: existing clothes first, substitutes second, purchases last.
 7. By default, recommend one strongest outfit, one optional adjustment/backup, and one "avoid" section.
 8. Only provide 2-3 full outfit options when the user explicitly asks for multiple plans or detailed analysis.
 9. Put the best option first and keep output mobile-friendly.
 10. Produce the normal deliverable as concise text advice plus an outfit-board image.
 11. If image output is available, follow `references/outfit-board-prompting.md` and generate the outfit board by default.
-12. If image output is unavailable, the user explicitly asks for text only, or the current agent cannot call an image generator, use the fallback behavior in `references/model-capability-config.md`.
+12. Before calling any image generation model, select the image prompt profile for the configured model, then compile the full outfit-board prompt from `references/outfit-board-prompting.md`. Never send a short freeform lifestyle/photo prompt such as "a person wearing..." or "casual weekend outfit..." to the image model.
+13. If image output is unavailable, the user explicitly asks for text only, or the current agent cannot call an image generator, use the fallback behavior in `references/model-capability-config.md`.
 
 ## Required References
 
@@ -163,6 +165,8 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 ## Visual Output
 
 When visual output is available, create a vertical outfit board/styling board by default, not only when explicitly requested. Do not default to real-person virtual try-on. The default V1 image template is the `Structured OOTD Styling Card`: light header, central illustrated outfit figure, surrounding item cards, and bottom analysis strip. The image should use Chinese labels and mobile-first composition.
+
+The image prompt sent to the generator must force an outfit-board layout. If a prompt could reasonably produce a standalone photorealistic model photo, studio portrait, catalogue lookbook, or virtual try-on, rewrite it before generation.
 
 If image output is unavailable, say so briefly and provide the text-board fallback instead of silently omitting the image.
 

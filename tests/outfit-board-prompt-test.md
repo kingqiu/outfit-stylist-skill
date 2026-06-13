@@ -586,3 +586,62 @@ Decision:
 - Add `Outfit Diagnosis` as a formal mode.
 - Diagnosis should not immediately replace the outfit; it must first judge whether the proposed combination works.
 - Default diagnosis output is: verdict, what works, what needs adjustment, minimal fix, avoid note, and corrected outfit-board image.
+
+## Regression 7: OpenClaw MiniMax M3 + Google Image Models
+
+Date: 2026-06-13
+
+Runtime:
+
+- Host: OpenClaw
+- Reasoning model: MiniMax M3
+- Image output model observed: Gemini 2.5 Flash Image
+- Image output model target: `nano-banana-pro-preview`
+
+Failure observed:
+
+- Reasoning produced a short English image prompt:
+
+```text
+Casual weekend dad outfit in light rain: solid black fine-knit short-sleeve top...
+```
+
+- The generated image became a standalone photorealistic full-body person photo.
+- It did not follow the `Structured OOTD Styling Card` template.
+- It lacked surrounding item cards, Chinese labels, fabric/color panels, and bottom analysis.
+
+Regression rule:
+
+- A short lifestyle/photo prompt is not a valid outfit-board prompt.
+- Any prompt that starts with "a person wearing", "fashion photo", "casual weekend outfit", or similar lookbook wording must be rejected before image generation.
+- The image model must receive the compiled outfit-board prompt only.
+
+Expected prompt start for `nano-banana-pro-preview`:
+
+```text
+Create a vertical 9:16 professional Chinese OOTD styling card / outfit board.
+This is an illustrated fashion notebook infographic, not a single model photo.
+```
+
+Expected prompt start for `gemini-2.5-flash-image`:
+
+```text
+CREATE A VERTICAL 9:16 STRUCTURED OOTD STYLING CARD / OUTFIT BOARD.
+Do NOT create a single photorealistic man/woman photo.
+```
+
+Expected prompt content:
+
+- artifact type: structured OOTD styling card / outfit board
+- layout: central illustrated figure or flat-lay, surrounding item cards, arrows, fabric circles, color chips, bottom analysis
+- text: exact short Chinese labels, or numbered marker fallback
+- fidelity: preserve uploaded garment category, length, color family, silhouette, and key details
+- exclusions: no standalone person photo, no studio portrait, no catalogue lookbook, no virtual try-on
+
+Pass criteria:
+
+- Output prompt clearly requests an outfit board, not a photo.
+- Output prompt includes Chinese text fields or numbered-marker fallback.
+- Output prompt includes surrounding item cards and bottom analysis.
+- Output prompt includes uploaded-item fidelity locks.
+- Generated image should be a vertical OOTD board; if it becomes a single person photo, mark the run failed and regenerate with the Google model-specific prompt.

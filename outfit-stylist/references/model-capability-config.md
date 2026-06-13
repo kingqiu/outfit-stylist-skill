@@ -379,6 +379,30 @@ Model selection:
 - `gemini-3.1-flash-image` / Nano Banana 2: choose for higher-throughput outfit boards.
 - `gemini-2.5-flash-image` / Nano Banana: choose for fast creative drafts.
 
+OpenClaw or host aliases:
+
+- Treat `nano-banana-pro-preview` as Nano Banana Pro / Gemini Pro image generation.
+- Treat `nano-banana` or `gemini-2.5-flash-image` as the fast draft family.
+- If the host supports both, prefer Nano Banana Pro for this skill's default outfit boards.
+
+Quality note for Nano Banana Pro:
+
+- Use it for the normal polished `Structured OOTD Styling Card` output.
+- Send a full visual-spec prompt, not a short mood prompt.
+- Use `aspectRatio: "9:16"` and `imageSize: "2K"` as the default.
+- Pass uploaded garment images as references when the host supports reference images.
+- Keep visible Chinese labels short but explicit; Pro can handle text better than fast draft models, but dense paragraph blocks still reduce quality.
+- For correction turns, prefer targeted edits that preserve outfit and item fidelity rather than regenerating the whole board.
+
+Quality note for `gemini-2.5-flash-image`:
+
+- Treat this as a fast draft model, not the highest-fidelity outfit-board model.
+- It can collapse structured prompts into a single photorealistic lookbook image if the prompt starts with a lifestyle description.
+- Always use the Gemini 2.5 Flash compact hard-layout prompt from `references/outfit-board-prompting.md`.
+- Put "structured OOTD styling card / outfit board" in the first line of the prompt.
+- Keep Chinese label groups to 5-6 max. If text quality is unstable, generate a numbered board and provide Chinese mapping in the message body.
+- Prefer `gemini-3-pro-image` or `gpt-image-2` for polished shareable cards when available.
+
 Image input:
 
 ```yaml
@@ -530,11 +554,49 @@ items:
 
 Image output models should receive:
 
+- provider-aware prompt profile selected from the configured image output model
 - final selected outfit
 - fidelity locks for uploaded items
 - text labels in Chinese
 - default template: `Structured OOTD Styling Card`
 - negative constraints: no extra people, no mini photos, no drinks/phones/wallets/receipts, no changing uploaded garment type or length
+- the complete compiled image prompt, not a short mood prompt or English lookbook summary
+
+Prompt profile selection:
+
+```yaml
+image_prompt_profile:
+  openai_gpt_image:
+    match: ["gpt-image-2", "gpt-image"]
+    style: "full structured OOTD board prompt"
+  google_nano_banana_pro:
+    match: ["nano-banana-pro-preview", "gemini-3-pro-image", "gemini-3-pro-image-preview"]
+    style: "visual-spec prompt with composition, typography, exact Chinese text, references"
+  google_nano_banana_fast:
+    match: ["gemini-2.5-flash-image", "nano-banana"]
+    style: "compact hard-layout prompt, explicit not-a-photo guardrail"
+  jimeng_seedream:
+    match: ["jimeng", "seedream"]
+    style: "concise structured prompt with fidelity locks near the end"
+  minimax_image:
+    match: ["minimax", "image-01"]
+    style: "explicit item zones, limited text panels"
+  numbered_fallback:
+    match: ["weak_chinese_text", "repeated_text_garbling"]
+    style: "numbered markers on image, Chinese mapping in message body"
+```
+
+If no model name is available, default to the full `Structured OOTD Styling Card` prompt and include the pre-call rejection rule from `references/outfit-board-prompting.md`.
+
+Invalid image-output prompt examples:
+
+```text
+Casual weekend dad outfit in light rain...
+A man wearing a black knit top and rain jacket...
+Fashion photo of a person in...
+```
+
+These prompts are invalid because they can produce a standalone model photo. Rewrite them into a structured outfit-board prompt before calling image generation.
 
 ## Text Board Fallback
 

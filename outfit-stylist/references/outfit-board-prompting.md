@@ -62,6 +62,7 @@ Use photorealistic figures only when the user explicitly asks for editorial phot
 Build the image prompt in this order so every model receives the same essential constraints:
 
 ```text
+0. resolve image_output provider/model and select a prompt profile
 1. base template: Structured OOTD Styling Card
 2. primary scenario pack: business / commute / travel / ceremony / family / campus / fitness / casual / outdoor / social / wardrobe
 3. optional weather function pack: heat / cold / rain / wind / sun
@@ -69,10 +70,77 @@ Build the image prompt in this order so every model receives the same essential 
 5. uploaded-item fidelity locks, if any
 6. Chinese text fields
 7. hard exclusions
-8. provider-specific size or reference-image settings
+8. provider-specific prompt profile, size, and reference-image settings
 ```
 
 Do not start from a freeform aesthetic prompt alone. The board should always be grounded in the final outfit recommendation and any uploaded wardrobe items.
+
+## Provider-Aware Prompt Profile Selection
+
+Before writing the final text-to-image prompt, inspect the configured `image_output.provider` and `image_output.model`. Then choose one prompt profile:
+
+| Profile | Use When | Prompt Shape |
+| --- | --- | --- |
+| `openai_gpt_image` | `gpt-image-2` or OpenAI-compatible GPT Image | Full structured prompt with detailed layout, Chinese labels, and reference-item fidelity locks. |
+| `google_nano_banana_pro` | `nano-banana-pro-preview`, `gemini-3-pro-image`, `gemini-3-pro-image-preview` | Visual-spec prompt. Treat the prompt like a design brief with composition, typography, layout, exact Chinese snippets, and reference behavior. |
+| `google_nano_banana_fast` | `gemini-2.5-flash-image`, `nano-banana`, fast/preview Gemini image models | Compact hard-layout prompt. Start with the artifact type and explicit "not a single photo" constraint. Keep labels to 5-6 groups. |
+| `jimeng_seedream` | Jimeng / Seedream / Volcengine image models | Concise prompt with layout first, selected outfit second, fidelity locks near the end, and short Chinese labels. |
+| `minimax_image` | MiniMax image generation | Explicit item zones, fewer text panels, strong negative constraints against standalone portraits. |
+| `numbered_fallback` | Any model with weak Chinese rendering or repeated garbled text | Generate a numbered outfit board with markers 1-6 and provide exact Chinese mapping in the message body. |
+
+Selection rules:
+
+- If the model name contains `pro` and belongs to Google/Gemini/Nano Banana, prefer `google_nano_banana_pro`.
+- If the model name contains `2.5-flash`, `flash-image`, or plain `nano-banana`, prefer `google_nano_banana_fast`.
+- If the model repeatedly outputs a standalone person photo, downgrade to `google_nano_banana_fast` hard-layout style even when the model is stronger.
+- If the model repeatedly garbles Chinese labels, switch to `numbered_fallback`.
+- If a user uploads garment images and the model supports references, pass references and include fidelity locks. If references cannot be passed, describe the anchor item with stricter category/color/length/silhouette locks.
+
+The model profile affects only prompt compilation, not the styling decision. The same selected outfit should be preserved across profiles.
+
+## Image Prompt Compiler Contract
+
+The reasoning model must compile a complete outfit-board prompt before any image model call. Do not let the host agent or reasoning model reduce the prompt to a plain English lookbook sentence.
+
+The compiled prompt must include all of these fields:
+
+```yaml
+image_prompt_contract:
+  output_type: "structured_ootd_styling_card"
+  forbidden_output_type: "single photorealistic model photo, studio portrait, catalogue lookbook, virtual try-on"
+  aspect_ratio: "9:16"
+  visual_template: "natural editorial Structured OOTD Styling Card"
+  figure_style: "semi-realistic fashion illustration or illustrated flat-lay, not photorealistic"
+  required_layout:
+    - top Chinese title / scene / reason area
+    - one central complete outfit figure or outfit flat-lay
+    - surrounding item cards for top, bottom, shoes, bag, accessories, outerwear when relevant
+    - fabric/color/detail callouts
+    - compact bottom analysis strip or paper-note summary
+  selected_outfit: {}
+  fidelity_locks: []
+  chinese_text_fields: {}
+  hard_exclusions: []
+  provider_notes: []
+```
+
+Pre-call rejection rule:
+
+- If the image prompt reads like "a person wearing..." or "fashion photo of..." and does not explicitly request an OOTD styling card / outfit board layout, reject it and rewrite it.
+- If the prompt does not mention surrounding item cards, Chinese labels, and bottom analysis/paper notes, reject it and rewrite it.
+- If the prompt asks for a photorealistic person, studio background, catalogue lookbook, or virtual try-on without explicit user request, reject it and rewrite it.
+- If uploaded-item fidelity locks are missing for user-provided garment images, reject it and rewrite it.
+
+Use this short self-check before calling image generation:
+
+```text
+Does this prompt force an outfit-board infographic rather than a single person photo?
+Does it force Chinese labels or numbered markers?
+Does it include the exact selected outfit and uploaded-item fidelity locks?
+Does it forbid studio portrait / catalogue / virtual try-on output?
+```
+
+Only call the image model after all answers are yes.
 
 ## Scenario Prompt Packs
 
@@ -414,10 +482,123 @@ Use these small adjustments only after the main prompt is complete.
 
 - OpenAI GPT Image: keep the prompt explicit about layout, Chinese labels, and reference-item fidelity; use reference images for uploaded garments when available.
 - Gemini Nano Banana: ask for cleaner typography and fewer labels when Chinese text density becomes high; use Nano Banana Pro for complex boards.
+- Gemini Nano Banana Pro / Gemini 3 Pro Image: use the Pro visual-spec prompt below. It is the preferred Google model for polished outfit boards, complex layout, Chinese text, reference garments, and iterative refinements.
+- Gemini 2.5 Flash Image / Nano Banana fast draft: use the compact hard-layout prompt below. It is more likely than Pro models to collapse into a normal person photo if the prompt starts with a lifestyle sentence. Put "structured OOTD styling card / outfit board" in the first sentence, keep the layout list near the top, and avoid starting with "casual man/woman wearing...".
 - Jimeng / Seedream: keep prompts concise when possible; put fidelity locks and Chinese text fields near the end as direct instructions.
 - MiniMax image generation: keep item zones explicit and avoid asking for too many small text panels.
 - ListenHub Image: use the same structured outfit-board prompt; set `aspectRatio` to `9:16` when available, pass uploaded garments as `referenceImages`, and save/attach base64 output when using the OpenAPI.
 - If the provider cannot render Chinese reliably, switch to numbered board mode and provide Chinese callout mapping in text.
+
+### Gemini Nano Banana Pro Visual-Spec Prompt
+
+Use this when the configured image output model is `nano-banana-pro-preview`, `gemini-3-pro-image`, `gemini-3-pro-image-preview`, or a host alias for Google Nano Banana Pro.
+
+Nano Banana Pro is better suited than Flash models for complex posters, outfit boards, multilingual text, diagrams, reference images, and iterative editing. Give it a precise visual specification instead of a short keyword prompt.
+
+Prompting rules:
+
+- Start with a strong creation verb and the exact artifact type.
+- Specify subject, composition, layout, style, typography, and reference-image behavior.
+- Put exact visible Chinese text in quotes.
+- Use positive instructions first; keep negative constraints as a final guardrail.
+- Use `9:16` and `2K` by default; use `4K` only for polished shareable exports when the host budget allows it.
+- If uploaded garments are available, pass them as reference images and repeat concise fidelity locks in the prompt.
+- For follow-up correction, ask for a targeted edit to the existing board instead of regenerating from scratch.
+
+```text
+Create a vertical 9:16 professional Chinese OOTD styling card / outfit board.
+This is an illustrated fashion notebook infographic, not a single model photo.
+
+Primary goal:
+Turn the final outfit recommendation into a readable mobile outfit board with Chinese labels.
+
+Composition:
+- warm paper-texture background, refined fashion notebook mood
+- moderately sized Chinese title on a light paper strip
+- one central semi-realistic illustrated full-body outfit figure
+- staggered surrounding item cards for 上衣 / 下装 / 鞋子 / 包包 / 配饰 / 外套
+- fabric texture circles and color chips
+- thin hand-drawn arrows connecting item cards to the outfit
+- compact bottom analysis strip for 色彩 / 比例 / 风险提醒 / 适配场景
+- asymmetric editorial layout, not a rigid dashboard grid
+
+Typography:
+Use clear, legible Simplified Chinese text. Use these exact text snippets:
+"标题：[TITLE]"
+"场景：[SCENE]"
+"首选理由：[REASON]"
+"搭配要点：[KEY_POINTS]"
+"风险提醒：[RISK]"
+Keep every label short and readable on a phone.
+
+Outfit details:
+上衣：[TOP]
+下装：[BOTTOM]
+鞋子：[SHOES]
+包包：[BAG]
+配饰：[ACCESSORIES]
+外套：[OUTERWEAR]
+
+Reference garment fidelity:
+[FIDELITY_LOCKS]
+If a garment comes from a reference image, preserve its category, length, color family, silhouette, and key visible details. Do not shorten, recolor, or change the garment type.
+
+Style:
+semi-realistic fashion illustration, natural adult proportions, clean Korean/Japanese magazine illustration style, refined but wearable, outfit accuracy prioritized over facial detail.
+
+Final guardrails:
+Do not create a photorealistic studio portrait, catalogue lookbook, product ad, or virtual try-on.
+Do not add extra people, lifestyle props, phones, drinks, notebooks, wallets, receipts, cosmetics, nail panels, underwear, brand logos, watermarks, or dense paragraph blocks.
+```
+
+If the first result is close but the layout is off, use edit prompts such as:
+
+```text
+Keep the same outfit and garment details. Convert this into a clearer OOTD styling card: add surrounding item cards, Chinese labels, fabric circles, color chips, arrows, and a compact bottom analysis strip. Do not change garment category, length, color, or silhouette.
+```
+
+### Gemini 2.5 Flash Compact Hard-Layout Prompt
+
+Use this when the configured image output model is `gemini-2.5-flash-image`, `nano-banana`, or another fast/low-instruction-following image model.
+
+```text
+CREATE A VERTICAL 9:16 STRUCTURED OOTD STYLING CARD / OUTFIT BOARD.
+Do NOT create a single photorealistic man/woman photo.
+Do NOT create a studio portrait, catalogue lookbook, product ad, or virtual try-on.
+
+Visual format:
+warm paper fashion notebook page, semi-realistic fashion illustration, natural editorial OOTD board.
+One central illustrated full-body outfit figure or outfit flat-lay.
+Surrounding item cards: 上衣 / 下装 / 鞋子 / 包包 / 配饰 / 外套.
+Add fabric texture circles, color chips, thin arrows, and a small bottom analysis strip.
+All visible advice text should be Chinese and short. If Chinese rendering becomes unreliable, use numbered markers 1-6 and leave clean label spaces.
+
+Required Chinese fields:
+标题：[TITLE]
+场景：[SCENE]
+首选理由：[REASON]
+搭配要点：[KEY_POINTS]
+风险提醒：[RISK]
+
+Selected outfit:
+上衣：[TOP]
+下装：[BOTTOM]
+鞋子：[SHOES]
+包包：[BAG]
+配饰：[ACCESSORIES]
+外套：[OUTERWEAR]
+
+Uploaded garment fidelity locks:
+[FIDELITY_LOCKS]
+
+Hard exclusions:
+no standalone person photo, no photorealistic studio model, no white-background catalogue shot,
+no virtual try-on, no extra people, no lifestyle props, no phone, no wallet, no receipts,
+no drinks, no notebooks, no makeup, no manicure, no underwear, no brand logos,
+do not change uploaded garment category, length, color, silhouette, or key details.
+```
+
+For Gemini 2.5 Flash, the prompt should begin with the hard layout instruction above, not with the outfit mood or the user's scenario.
 
 ## Default Template: Structured OOTD Styling Card
 
