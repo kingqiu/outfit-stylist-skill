@@ -46,11 +46,47 @@ Do not infer sensitive identity or body judgments from photos.
 
 Use a lightweight profile initialization when:
 
-- the user is using the skill for the first time
+- the user asks for outfit advice and no basic profile exists
 - the user asks for more personalized recommendations
 - repeated recommendations would benefit from stable preferences
 
-Do not block an urgent outfit request just because the profile is incomplete. If the user asks "明天怎么穿", answer the current request first, then optionally ask for missing profile details for future use.
+## Trigger Strategy
+
+Use this decision table:
+
+| Situation | Behavior |
+| --- | --- |
+| First outfit request and no basic profile exists | Ask a short profile initialization before giving a recommendation if the missing basics affect the answer. |
+| Missing only non-critical details | Answer the current outfit request first, then optionally ask for missing details for future use. |
+| User explicitly asks to build/personalize profile | Start profile initialization immediately. |
+| User asks urgently, such as "马上出门怎么穿" | Give the best answer from available context first; ask profile questions after. |
+| User has already declined profile questions | Do not ask again in the same thread unless the user reopens the topic. |
+| Current task has enough context | Do not interrupt with profile initialization. |
+
+Basic profile fields that may justify asking before recommendation:
+
+- clothing direction or gender expression when the garment categories depend on it
+- age range when formality/maturity signal matters
+- height/weight or fit constraints when proportions, length, or fit are central to the request
+- comfort limits when the scene involves long walking, heat, cold, heels, tightness, or stiff materials
+
+Do not block an urgent outfit request just because the profile is incomplete.
+
+## Required Intro Before Asking
+
+Before asking profile questions, tell the user:
+
+1. why these questions are needed
+2. how many questions will be asked
+3. that optional questions can be skipped
+4. that the information is only for personalization and is stored locally/on the user's own computer when memory is available; it is not intentionally uploaded to a third party by the skill
+
+Use this tone:
+
+```markdown
+为了给你搭得更准，我先问你 6 个很轻的问题；不想答的可以跳过。
+这些信息只用来做你的穿衣画像，默认保存在你自己的本地环境/个人电脑里，不会由这个 skill 主动上传给第三方。
+```
 
 Ask at most 6 short questions. Height and weight are optional.
 

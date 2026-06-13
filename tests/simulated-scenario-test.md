@@ -459,7 +459,8 @@ Prompt:
 Simulated output:
 
 ```markdown
-可以，给我 30 秒的信息就够了；不想答的可以跳过。
+为了给你搭得更准，我先问你 6 个很轻的问题；不想答的可以跳过。
+这些信息只用来做你的穿衣画像，默认保存在你自己的本地环境/个人电脑里，不会由这个 skill 主动上传给第三方。
 
 1. 你希望我按什么穿衣方向给建议？男装 / 女装 / 中性 / 都可以
 2. 你的年龄段大概是？20s / 30s / 40s / 其他
@@ -481,6 +482,35 @@ QA:
 
 - Pass: asks at most 6 questions.
 - Pass: height/weight are optional.
+- Pass: tells the user how many questions will be asked before asking.
+- Pass: gives a local/privacy reassurance before asking.
 - Pass: does not infer body type or sensitive identity.
 - Pass: does not block urgent styling requests.
 - Watch: profile collection should remain lightweight and should not become a long onboarding questionnaire.
+
+## Scenario 8: First Outfit Request Without Basic Profile
+
+Prompt:
+
+> 明天有个商务聚会，我应该怎么穿？
+
+Simulated behavior:
+
+```markdown
+可以，我先帮你把方向定住。为了避免建议太泛，我需要先问 4-6 个很轻的问题；不想答的可以跳过。
+这些信息只用来做你的穿衣画像，默认保存在你自己的本地环境/个人电脑里，不会由这个 skill 主动上传给第三方。
+
+1. 你希望我按什么穿衣方向给建议？男装 / 女装 / 中性 / 都可以
+2. 你的年龄段大概是？20s / 30s / 40s / 其他
+3. 你明天这个商务聚会偏正式还是偏轻松？
+4. 身高体重大概多少？可跳过
+5. 你有什么不想穿的东西或舒适雷区吗？
+6. 你手边有哪些衣服/鞋/包可以用？
+```
+
+QA:
+
+- Pass: profile initialization can be triggered by the first outfit request, not only by explicit profile-building requests.
+- Pass: asks before recommending only because basic profile is missing and the event depends on formality/gender expression/comfort.
+- Pass: explains number of questions and local privacy before asking.
+- Watch: for urgent requests, the skill should give a provisional recommendation first and ask profile questions after.
