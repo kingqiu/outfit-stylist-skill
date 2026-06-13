@@ -5,6 +5,7 @@ Use this as the default V1 outfit-board image template.
 ```text
 Create a vertical mobile-first structured OOTD styling card for [SCENARIO].
 Use [USER_PROFILE] and [OUTFIT_PLAN] as the styling basis.
+Apply the selected scenario pack: [SCENARIO_PACK].
 
 Visual style:
 polished fashion notebook page, warm soft paper-texture background, subtle tape details,
@@ -59,3 +60,26 @@ extra people, friend-group photos, decorative mini photo prints, unrelated scene
 or unrelated lifestyle objects.
 Keep header light, bottom cards delicate, and risk reminders calm.
 ```
+
+## Assembly Notes
+
+Fill the prompt in this order:
+
+```text
+1. base card template
+2. one scenario pack from references/outfit-board-prompting.md
+3. outfit details
+4. fidelity locks for uploaded items
+5. Chinese text fields
+6. hard exclusions
+```
+
+Use only one primary scenario pack unless the request clearly combines two contexts, such as "client visit then dinner". For uploaded wardrobe items, put fidelity locks after outfit details so the image model sees them as final constraints.
+
+Scenario pack options:
+
+- `business_client_visit`
+- `casual_weekend`
+- `outdoor_sport_travel`
+- `social_date_gathering`
+- `wardrobe_multi_image`

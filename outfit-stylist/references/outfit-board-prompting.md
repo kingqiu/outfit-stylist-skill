@@ -57,6 +57,144 @@ Use photorealistic figures only when the user explicitly asks for editorial phot
 - Social/date: allow warmer color chips and softer accessories, but keep labels brief.
 - Single uploaded item: treat the uploaded item as the anchor. Keep it recognizable and make every added piece support it.
 
+## Prompt Assembly Order
+
+Build the image prompt in this order so every model receives the same essential constraints:
+
+```text
+1. base template: Structured OOTD Styling Card
+2. scenario pack: business / casual / outdoor / social / wardrobe
+3. selected outfit details
+4. uploaded-item fidelity locks, if any
+5. Chinese text fields
+6. hard exclusions
+7. provider-specific size or reference-image settings
+```
+
+Do not start from a freeform aesthetic prompt alone. The board should always be grounded in the final outfit recommendation and any uploaded wardrobe items.
+
+## Scenario Prompt Packs
+
+Choose one primary scenario pack. Add one secondary pack only when the user's situation clearly needs it.
+
+### Business / Client Visit
+
+Use for customer meetings, finance clients, interviews, office presentations, formal dinners, or business social events.
+
+```text
+Business styling pack:
+quiet professional tone, clean spacing, restrained palette, polished but not stiff,
+subtle paper notes for scene/reason/risk, calm confident posture,
+no playful stickers, no streetwear exaggeration, no nightlife props.
+Prioritize garment fit, trouser length, shoe polish, bag structure, and refined accessories.
+Risk reminder should focus on avoiding too casual, too sporty, too loud, or too tight.
+Menswear: use full-length or slight-break trousers in business scenes; avoid cropped hems and excessive ankle exposure.
+Womenswear: keep neckline, hemline, and accessories occasion-appropriate; avoid party styling unless requested.
+```
+
+Chinese label suggestions:
+
+```text
+标题：稳妥商务 OOTD / 柔和商务 OOTD / 客户拜访 OOTD
+首选理由：专业但不硬 / 干净稳妥 / 有分寸感
+风险提醒：别配运动鞋 / 避免太休闲 / 别太抢眼
+```
+
+### Casual / Weekend
+
+Use for friend meetups, cafes, city walks, shopping, museum visits, short trips, or relaxed non-business plans.
+
+```text
+Casual styling pack:
+easy wearable mood, relaxed but intentional proportions, breathable fabrics,
+slightly warmer color chips, light hand-drawn arrows, natural movement in the figure.
+Keep item cards focused on clothes, shoes, bag, and accessories; do not add phones, drinks, notebooks, wallet contents, cosmetics, or random lifestyle objects.
+Risk reminder should focus on avoiding sloppy, over-layered, too hot, too cold, or mismatched formality.
+```
+
+Chinese label suggestions:
+
+```text
+标题：周末轻松 OOTD / 城市休闲 OOTD / 朋友见面 OOTD
+首选理由：舒服但有型 / 轻松不随便 / 清爽耐看
+风险提醒：别堆太多层 / 避免像运动装 / 鞋子别太笨重
+```
+
+### Outdoor / Sport / Travel
+
+Use for hiking, seaside, rainy days, walking-heavy travel, commuting in bad weather, or outdoor activity.
+
+```text
+Outdoor function pack:
+functional but tidy outfit board, clear weather notes, breathable fabric callouts,
+sun/rain/wind/grip/layering panels only when relevant, practical footwear emphasis,
+lightweight bag or water-resistant layer when needed.
+The outfit should still look like a complete wearable look, not a gear catalogue.
+Avoid decorative adventure props, mountain posters, water bottles, maps, phones, tickets, or unrelated travel objects unless the user explicitly asks.
+Risk reminder should focus on overheating, rain exposure, poor grip, chafing, or impractical shoes.
+```
+
+Chinese label suggestions:
+
+```text
+标题：轻户外 OOTD / 海边清爽 OOTD / 阵雨通勤 OOTD
+首选理由：透气好走 / 防晒防雨 / 轻便不狼狈
+风险提醒：鞋底要防滑 / 别穿厚重棉 / 雨天避开浅麂皮
+```
+
+### Social / Date / Gathering
+
+Use for meals, dates, parties, gatherings, weddings as guest, or situations where warmth and approachability matter.
+
+```text
+Social styling pack:
+warmer emotional tone, softer color relationships, approachable silhouette,
+slightly more attention to accessories, bag, texture, and face-near color.
+Keep the figure tasteful and adult; no seductive posing, no lingerie, no beauty ranking, no makeup/nail panels.
+Risk reminder should focus on avoiding overdressing, underdressing, overexposure, or too many focal points.
+```
+
+Chinese label suggestions:
+
+```text
+标题：聚会得体 OOTD / 晚餐约会 OOTD / 轻松社交 OOTD
+首选理由：亲和但精致 / 有亮点不夸张 / 松弛有分寸
+风险提醒：别太用力 / 露肤别过多 / 亮点只留一个
+```
+
+### Wardrobe / Multi-Image
+
+Use when the user uploaded several wardrobe items and wants a combination.
+
+```text
+Wardrobe fidelity pack:
+show only selected uploaded items in the central outfit,
+place backup items only in small backup cards if needed,
+do not include avoided uploaded items in the central look,
+mark missing shoes, bag, belt, or outerwear as suggested additions.
+Preserve uploaded item category, length, color, silhouette, and visible key details.
+If a reference item is a long trouser, keep it as long trousers. If it is a vest, keep it as a vest. If it is a Polo, keep the collar and short-sleeve Polo structure.
+Do not improve, shorten, recolor, or replace uploaded items just to make the layout prettier.
+```
+
+Chinese label suggestions:
+
+```text
+标题：衣橱组合 OOTD / 现有衣服这样搭 / 商务聚会组合
+首选理由：现有单品最稳组合 / 颜色和场合都成立 / 保留单品特点
+风险提醒：未选单品别混入 / 长裤不能变短裤 / 休闲件别抢主场
+```
+
+## Provider-Specific Prompt Notes
+
+Use these small adjustments only after the main prompt is complete.
+
+- OpenAI GPT Image: keep the prompt explicit about layout, Chinese labels, and reference-item fidelity; use reference images for uploaded garments when available.
+- Gemini Nano Banana: ask for cleaner typography and fewer labels when Chinese text density becomes high; use Nano Banana Pro for complex boards.
+- Jimeng / Seedream: keep prompts concise when possible; put fidelity locks and Chinese text fields near the end as direct instructions.
+- MiniMax image generation: keep item zones explicit and avoid asking for too many small text panels.
+- If the provider cannot render Chinese reliably, switch to numbered board mode and provide Chinese callout mapping in text.
+
 ## Default Template: Structured OOTD Styling Card
 
 Use this as the default image-output template for V1, regardless of gender, style direction, or occasion, unless the user explicitly asks for another visual format.

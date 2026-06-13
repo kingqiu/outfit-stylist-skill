@@ -114,6 +114,40 @@ notes: "installation-specific details"
 
 Never put actual API keys, secrets, access tokens, or private endpoint URLs inside the skill repository.
 
+## Runtime Resolution Order
+
+At the start of every complete styling request, resolve model capabilities in this order:
+
+```text
+1. reasoning
+2. image_input, only if the user provided images
+3. image_output, unless the user explicitly asked for text only
+```
+
+Use `references/end-to-end-workflow.md` for the full request chain.
+
+Do not skip the image board merely because the user did not explicitly ask for one. A normal styling recommendation is text plus image when image output is available.
+
+Do not block the answer if one layer is unavailable:
+
+- no reasoning model: use the current agent model with the same structured contract
+- no image input model: ask for a text description only when needed
+- no image output model: provide the explicit text-board fallback
+
+The three layers may use different providers, for example:
+
+```yaml
+reasoning:
+  provider: "zhipu"
+  model: "glm-4.6"
+image_input:
+  provider: "minimax"
+  model: "MiniMax-M3"
+image_output:
+  provider: "jimeng"
+  model: "jimeng_seedream46_cvtob"
+```
+
 ## Official Provider Notes
 
 These notes reflect official provider documentation checked on 2026-06-13. Because model names and limits change, treat exact model ids as configuration values rather than hardcoded skill logic.

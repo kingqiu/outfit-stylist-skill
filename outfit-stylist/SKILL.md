@@ -36,25 +36,32 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
    - Multi-image combination: user provides several clothing images/items to combine.
    - Wardrobe outfit planning: user wants outfits from existing clothes.
    - Outfit board: user requests visual output.
-2. Gather only missing essentials:
+2. Resolve model capabilities before acting:
+   - reasoning: for styling decisions and final outfit logic
+   - image input: for uploaded clothing/outfit photos
+   - image output: for generated outfit boards
+   - if a model layer is unavailable, use the fallback behavior in `references/model-capability-config.md` and continue.
+3. Gather only missing essentials:
    - person: gender expression, age range, height/weight if relevant, comfort limits
    - weather: temperature, rain/snow, wind, indoor/outdoor changes
    - occasion: people, venue, dress code, activity length, mobility
    - clothes: available items by text or image
    - intent: target impression and impressions to avoid
-3. Apply wardrobe-first logic: existing clothes first, substitutes second, purchases last.
-4. By default, recommend one strongest outfit, one optional adjustment/backup, and one "avoid" section.
-5. Only provide 2-3 full outfit options when the user explicitly asks for multiple plans or detailed analysis.
-6. Put the best option first and keep output mobile-friendly.
-7. Add a short reason, risk note, and quick substitution.
-8. Produce the normal deliverable as concise text advice plus an outfit-board image.
-9. If image output is available, follow `references/outfit-board-prompting.md` and generate the outfit board by default.
-10. If image output is unavailable, the user explicitly asks for text only, or the current agent cannot call an image generator, use the fallback behavior in `references/model-capability-config.md`.
+4. If images are present, convert them into a structured clothing inventory before choosing outfits.
+5. Run the styling decision through the reasoning path: choose the strongest outfit, backup adjustment, avoid section, and image prompt brief.
+6. Apply wardrobe-first logic: existing clothes first, substitutes second, purchases last.
+7. By default, recommend one strongest outfit, one optional adjustment/backup, and one "avoid" section.
+8. Only provide 2-3 full outfit options when the user explicitly asks for multiple plans or detailed analysis.
+9. Put the best option first and keep output mobile-friendly.
+10. Produce the normal deliverable as concise text advice plus an outfit-board image.
+11. If image output is available, follow `references/outfit-board-prompting.md` and generate the outfit board by default.
+12. If image output is unavailable, the user explicitly asks for text only, or the current agent cannot call an image generator, use the fallback behavior in `references/model-capability-config.md`.
 
 ## Required References
 
 - Read `references/agent-compatibility.md` before changing package structure, installation paths, metadata, or runtime assumptions.
 - Read `references/model-capability-config.md` before handling image input/output availability, provider configuration, or fallbacks.
+- Read `references/end-to-end-workflow.md` before implementing or revising the full recommendation flow across reasoning, image input, image output, and fallback behavior.
 - Read `references/image-input-guidelines.md` when the user uploads clothing or outfit images.
 - Read `references/recommendation-format.md` before producing user-facing outfit recommendations.
 - Read `references/stylist-voice.md` before writing final user-facing advice or revising recommendation copy.
