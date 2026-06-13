@@ -77,7 +77,7 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 
 ## Visual Output
 
-When visual output is available and requested, create a vertical outfit board/styling board, not default real-person virtual try-on. The image should use Chinese labels and mobile-first composition.
+When visual output is available and requested, create a vertical outfit board/styling board, not default real-person virtual try-on. The default V1 image template is the `Structured OOTD Styling Card`: light header, central illustrated outfit figure, surrounding item cards, and bottom analysis strip. The image should use Chinese labels and mobile-first composition.
 
 If the image model cannot reliably render Chinese, generate a clean numbered visual board and provide the exact Chinese annotations separately.
 
@@ -90,4 +90,5 @@ Use these assets as output scaffolds when helpful:
 - `assets/templates/scenario-outfit.md`
 - `assets/templates/item-styling.md`
 - `assets/templates/multi-image-combination.md`
+- `assets/templates/structured-ootd-styling-card.md`
 - `assets/templates/wardrobe-outfit.md`

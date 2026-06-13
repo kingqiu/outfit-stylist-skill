@@ -76,3 +76,24 @@ Human voice does not mean long. Keep the first recommendation readable in one ph
 - 1 exact outfit line
 - 1 risk or adjustment line
 - 1 avoid section
+
+## Image-Based Item Voice
+
+When responding to an uploaded garment image, do not sound like a product classifier. Convert what is visible into a scene-relevant styling opinion.
+
+Good:
+
+```text
+图片里这件灰色 Polo 是稳的，但它的领口细条纹会带一点运动感。去金融客户那里没问题，只是下半身和鞋要更利落一点，把商务感拉回来。
+```
+
+Bad:
+
+```text
+识别结果：灰色短袖 Polo，翻领，三粒扣，商务休闲风。
+```
+
+For uploaded items, mention uncertainty only where it changes advice:
+
+- "图片里看起来是中灰，如果实物更深，可以把裤子换成浅一点的灰或藏青。"
+- "我看不到面料厚度，如果明天下午室内空调强，可以加一件薄夹克。"

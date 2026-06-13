@@ -220,5 +220,268 @@ QA:
 
 Decision:
 
-- Default visual recommendation: v4-style illustrated deconstructed OOTD board.
-- Detailed visual recommendation: v5-style long board, only when the user asks for a detailed board, shareable image, or social-card-like output.
+## Single-Item Business Board V2
+
+Saved output: `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd-v2.png`
+Output size: 885 x 1778 px, long vertical mobile image
+
+Prompt direction:
+
+```text
+Single uploaded item as anchor: gray short-sleeve Polo with subtle collar/sleeve trim.
+Business/client context: financial client visit, quiet layout, muted palette.
+Show the Polo as a cutout and integrated into the central outfit.
+Complete outfit: dark tailored trousers, black leather shoes, black belt, structured dark business bag, optional navy lightweight blazer.
+```
+
+QA:
+
+- Pass: uploaded item remains visually recognizable as the outfit anchor.
+- Pass: menswear business-casual direction is clear.
+- Pass: no underwear, makeup, nail details, wallet contents, phone, notebook, pen, receipts, or unrelated lifestyle objects.
+- Pass: Chinese labels are mostly readable and useful.
+- Pass: outfit items are complete: Polo, trousers, shoes, belt, bag, optional blazer, fabric and color references.
+- Watch: bottom summary cards make the board feel slightly like a UI panel instead of a fashion annotation sheet.
+
+Prompt refinement made:
+
+- Added "no bottom summary cards, checkbox cards, icon tiles, UI panels, rating boxes, or dashboard-like blocks".
+- Require labels to feel like fashion annotation notes attached to garments, not app interface components.
+
+## Single-Item Business Board V3
+
+Saved output: `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd-v3.png`
+Output size: 885 x 1777 px, long vertical mobile image
+
+QA:
+
+- Pass: removed the boxed footer cards from V2.
+- Pass: board feels more like a deconstructed OOTD sheet.
+- Pass: anchor Polo, trousers, blazer, bag, belt, shoes, texture swatches, and color palette are clear.
+- Pass: Chinese labels are readable.
+- Watch: model still placed reason/key/risk as a bottom text footer, although without boxes.
+
+Prompt refinement made:
+
+- Added label placement rules.
+- Reason should sit beside trousers/shoes; risk should sit beside the risky substitution or shoes.
+- Do not place reason/key/risk as a separate footer section.
+
+## Single-Item Business Board V4
+
+Saved output: `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd-v4.png`
+Output size: 887 x 1774 px, long vertical mobile image
+
+QA:
+
+- Pass: no footer cards or bottom summary section.
+- Pass: labels are integrated near garments and accessories.
+- Pass: anchor Polo appears both as a cutout and on the central outfit figure.
+- Pass: outfit is complete and business-appropriate: Polo, tailored trousers, leather shoes, belt, business bag, optional blazer.
+- Pass: Chinese labels are large and readable.
+- Pass: board avoids underwear, makeup, nail details, phones, wallet contents, notebooks, pens, receipts, and unrelated lifestyle objects.
+- Watch: "正式感靠裤鞋" became "正式感靠裤鞋" / "正式感靠裤鞋" style phrasing in some generations; prefer the more natural label "裤鞋拉正式感" in future prompts.
+
+Decision:
+
+- V4 is usable but not the preferred visual direction.
+- It is too much like a loose product breakdown; it lacks the stronger information hierarchy of the best structured OOTD card.
+- Future prompts should use the structured OOTD styling card layout: top title/scene/reason, central figure, surrounding garment cards, compact bottom analysis strip.
+- Use natural short callouts such as `裤鞋拉正式感`, `Polo 做主角`, `别配运动鞋`.
+
+## Gold Standard Reference Update
+
+User selected the strongest generated visual so far: the female soft-business OOTD card for first client meeting.
+
+Why it is better:
+
+- Clear information hierarchy: title, scene, reason, outfit, item cards, bottom analysis, one-line summary.
+- The central figure is integrated with the styling logic instead of floating among isolated products.
+- Garment cards have enough structure to be readable but still feel like a fashion notebook page.
+- Bottom modules for color, proportion, risk, and suitable scenes are helpful, not clutter.
+- It feels like a professional styling recommendation rather than a product collage or app UI.
+
+Decision:
+
+- Make `structured OOTD styling card` the preferred default image layout.
+- Allow a compact bottom analysis strip when it looks like a paper styling note, not a dashboard.
+- Do not over-remove structure; the goal is readable styling hierarchy, not a sparse collage.
+
+## Single-Item Business Board V5 Structured Card
+
+Saved output: `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd-v5-structured-card.png`
+Output size: 864 x 1821 px, long vertical mobile image
+
+Prompt direction:
+
+```text
+Use the selected soft-business OOTD card only as an information-hierarchy reference:
+top title, scene/reason chips, central illustrated outfit figure, surrounding garment cards,
+fabric texture circles, bottom analysis strip, final one-line summary.
+Do not copy the reference image's person, outfit, pose, exact typography, exact layout, or text.
+```
+
+QA:
+
+- Pass: strongest menswear board so far; much closer to the selected gold-standard style.
+- Pass: information hierarchy is clear from top to bottom.
+- Pass: central figure and item cards support the same outfit instead of feeling like loose product cutouts.
+- Pass: bottom analysis strip is useful: color, proportion, risk, and suitable scenes.
+- Pass: uploaded Polo remains the anchor and appears in both garment card and central outfit.
+- Pass: no underwear, makeup, nail details, wallet contents, phones, notebooks, pens, receipts, or unrelated lifestyle objects.
+- Watch: the red "no sneakers" risk icon is slightly heavy; future prompts should keep risk reminders calmer and more editorial.
+
+Decision:
+
+- V5 structured card becomes the preferred default image direction for single-item business styling.
+- Keep the full card hierarchy; do not strip the board down into sparse callouts.
+- Add a risk-visual constraint: avoid oversized warning/prohibition icons unless the issue is safety-critical.
+
+## Single-Item Business Board V6 Lower-Half Polish
+
+Saved output: `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd-v6-lower-polish.png`
+Output size: 863 x 1823 px, long vertical mobile image
+
+Prompt direction:
+
+```text
+Use the selected female soft-business OOTD card as a refinement reference for the lower half:
+delicate bottom analysis cards, airy spacing, soft paper texture, subtle tape,
+refined shoes, elegant trouser hem, small calm icons, and balanced final summary.
+```
+
+QA:
+
+- Pass: lower half is more polished than V5.
+- Pass: trouser hem and black leather shoes are cleaner and less bulky.
+- Pass: bottom analysis cards are lighter and more balanced.
+- Pass: risk reminder no longer uses a heavy red prohibition symbol.
+- Pass: full structured card hierarchy remains intact.
+- Watch: title is slightly large; bottom icons still feel a bit tool-like compared with the softer gold-standard reference.
+
+Decision:
+
+- V6 is the current preferred menswear single-item business board.
+- Keep the lower-half polish constraints in future prompts.
+- Further refinement should make icons more editorial and reduce oversized title weight slightly.
+
+## Single-Item Business Board V7 Light Header
+
+Saved output: `tests/visual-outputs/scenario-3-male-gray-polo-finance-visit-ootd-v7-light-header.png`
+Output size: 863 x 1823 px, long vertical mobile image
+
+Prompt direction:
+
+```text
+Use the selected female soft-business OOTD card as a quality reference for light header balance:
+moderately sized paper-note title, slim scene/reason strips, muted colors, no dark filled banner,
+airy top spacing, while preserving the V6 lower-half polish.
+```
+
+QA:
+
+- Pass: header is much lighter than V6 and closer to the selected gold-standard reference.
+- Pass: title no longer dominates the model.
+- Pass: scene and reason chips feel like paper notes rather than banners.
+- Pass: structured card hierarchy and lower analysis strip remain intact.
+- Watch: trouser hem exposes slightly too much ankle for a business-client menswear scene.
+
+Decision:
+
+- Use V7's header direction as the preferred header treatment.
+- Combine it with a menswear fit constraint: avoid cropped trousers or excessive ankle exposure in business scenes.
+
+## Template Abstraction
+
+The selected female soft-business card and the refined male Polo card share the same underlying image template.
+
+Template name:
+
+- `Structured OOTD Styling Card`
+- Chinese name: `结构化 OOTD 穿搭卡`
+
+Use as:
+
+- Default V1 image-output template.
+- Works across gender, occasion, style direction, and input mode.
+- Future image styles can be added as separate templates, but this is the default until another template is intentionally selected.
+
+Reusable structure:
+
+1. light header: title, scene chip, reason chip
+2. central illustrated full-body outfit figure
+3. surrounding garment cards with short Chinese notes
+4. fabric or texture circles attached to item cards
+5. bottom analysis strip: color, proportion, risk, suitable scenes
+6. optional final one-line summary
+
+Template asset:
+
+- `outfit-stylist/assets/templates/structured-ootd-styling-card.md`
+
+## Natural Editorial Variant
+
+The user later pointed out that an earlier male Polo board felt stronger than the stricter grid version because it was more natural and less stiff.
+
+Why it works:
+
+- The central figure feels more alive and less trapped by a grid.
+- Scene, reason, key points, and risk notes sit naturally on the left like paper notes.
+- Item cards are staggered around the figure, which gives the page more editorial movement.
+- The background scene adds atmosphere without becoming a lifestyle prop dump.
+- Bottom analysis is lighter and partial, so the card does not become a dashboard.
+
+Decision:
+
+- Keep `Structured OOTD Styling Card` as the default template.
+- Replace the earlier regular grid-card layout with the `natural editorial layout`.
+- Do not use the regular symmetrical card layout as the default because it feels too stiff.
+- Use a stricter grid only if the user explicitly asks for an organized comparison view.
+
+- Default visual recommendation: structured OOTD styling card with natural editorial layout.
+- Detailed visual recommendation: use the same natural editorial foundation, then add more garment/detail notes only when the user asks for a detailed board, shareable image, or social-card-like output.
+
+## Scenario 4: Same Polo, Seaside 33C
+
+Prompt:
+
+> 上衣还是刚刚给的灰色 Polo，明天要跟朋友到海边玩，温度 33°C，帮我出一个搭配方案。
+
+Saved output: `tests/visual-outputs/scenario-4-male-gray-polo-seaside-33c-ootd-v1.png`
+Output size: 941 x 1672 px, close to 9:16
+
+Text recommendation tested:
+
+```markdown
+## 今日建议
+
+**我建议你把这件灰色 Polo 往“清爽海边休闲”方向搭。**  
+33°C 去海边，重点不是再增加造型感，而是降温、防晒、走路舒服，同时别显得太随便。
+
+### 首选穿法
+灰色 Polo + 浅卡其短裤 + 皮质凉鞋/干净运动凉鞋 + 帆布托特包 + 墨镜和浅色帽子。
+
+Polo 可以自然放下来，或者只做一点前塞；短裤选膝上到膝盖附近，面料要轻薄但别太软塌。  
+如果会进咖啡店或坐车空调比较冷，可以带一件白色或米色薄亚麻衬衫，当防晒外搭。
+
+### 小调整
+鞋子如果要走沙滩，就选凉鞋；如果主要是海边餐厅和拍照，可以换成干净小白鞋，但别选厚重款。
+
+## 穿搭雷区
+- 不建议配深色长裤、黑皮鞋或商务包。这件 Polo 本身偏稳，再这样搭会太闷，也不适合 33°C 的海边。
+```
+
+Visual QA:
+
+- Pass: natural editorial layout works better than the regular grid for a relaxed seaside scene.
+- Pass: anchor gray Polo remains recognizable.
+- Pass: outfit logic matches heat and seaside activity: light shorts, sandals, tote, sunglasses, hat, linen overshirt.
+- Pass: Chinese labels are readable and mostly natural.
+- Pass: no underwear, makeup, nail details, wallet contents, phones, notebooks, pens, receipts, or unrelated clutter.
+- Watch: model added small extra scene photos/people near the bottom; future prompts should avoid extra people or photo inserts unless requested.
+- Watch: bottom suitable-scene area can be calmer and less scrapbook-like for default outputs.
+
+Decision:
+
+- Natural editorial layout generalizes well beyond business scenarios.
+- Add future prompt constraint: no extra people, no friend-group photo inserts, no decorative mini photos unless the user asks for a social-card style.

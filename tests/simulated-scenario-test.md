@@ -409,3 +409,43 @@ QA:
 - Pass: connects recommendation to situation and social signal.
 - Pass: still compact enough for mobile if limited to 2-3 options.
 - Watch: keep the first paragraph short; human voice cannot become long essay.
+
+## Scenario 6: Single Uploaded Polo, Business Visit V2
+
+Prompt:
+
+> 图片是一件灰色短袖 Polo，领口和袖口有细条纹。用户：35 岁男性，明天下午跟朋友约了去一个金融客户那里做商务拜访。应该怎么穿来跟现在这件 Polo 搭配？
+
+Simulated output:
+
+```markdown
+## 这件 Polo 可以这样搭
+
+图片里这件灰色 Polo 是稳的，领口和袖口的细条纹会带一点运动感。去金融客户那里可以穿，但下半身和鞋要更利落一点，把商务感拉回来。
+
+### 首选穿法
+这套的作用是：保留 Polo 的轻松感，但让整个人看起来像是来认真谈事的。
+
+穿法：灰色 Polo + 藏青或深灰挺括西裤 + 黑色乐福鞋/德比鞋 + 黑色皮带 + 深色商务包。  
+小调整：Polo 建议扎进裤子，裤长不要堆在鞋面；如果客户办公室偏正式，加一件藏青色轻薄西装外套。
+
+### 如果想更亲和一点
+把深色西裤换成米灰或浅卡其的挺括休闲裤，鞋仍然用黑色或深棕皮鞋。这样会更轻松，但还是不会像周末出门。
+
+## 穿搭雷区
+- 不建议配浅蓝牛仔裤、运动鞋和双肩包。这件 Polo 已经有休闲感了，这样搭去金融客户那里会显得松。
+```
+
+Optional image-board prompt notes:
+
+- Use item-based deconstructed OOTD board.
+- Anchor item: gray short-sleeve Polo with subtle collar/sleeve trim; do not copy logo.
+- Business/client context: quieter layout, muted palette, no playful props.
+- Required labels: `灰色 Polo 商务休闲`, `金融客户拜访`, `正式感靠裤鞋`, `深色西裤 / 皮鞋 / 商务包`, `别配运动鞋`.
+
+QA:
+
+- Pass: starts with scene-relevant judgment instead of image classification.
+- Pass: uses one main outfit, one adjustment, and one avoid section.
+- Pass: wording is compact enough for phone reading.
+- Pass: the uploaded item remains the anchor and is not replaced.
