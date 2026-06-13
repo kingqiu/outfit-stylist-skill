@@ -125,6 +125,7 @@ At the start of every complete styling request, resolve model capabilities in th
 ```
 
 Use `references/end-to-end-workflow.md` for the full request chain.
+Use `references/minimal-configuration.md` when explaining installation levels or partial model availability.
 
 Do not skip the image board merely because the user did not explicitly ask for one. A normal styling recommendation is text plus image when image output is available.
 

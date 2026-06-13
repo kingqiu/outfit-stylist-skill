@@ -101,6 +101,26 @@ Default quick-start questions:
 
 Store answers only as user-provided preferences. Do not infer or judge body type from height, weight, or photos.
 
+## Relationship To Wardrobe Memory
+
+Use `references/memory-workflow.md` when profile preferences need to interact with saved wardrobe items.
+
+Profile memory answers questions like:
+
+```text
+What does the user usually need, prefer, avoid, or feel comfortable wearing?
+```
+
+Wardrobe memory answers:
+
+```text
+What specific items does the user own, and what are those items good or risky for?
+```
+
+Do not store item-specific problems as broad profile rules too quickly. For example, "这条裤子太热" should first become an item note, not "用户不穿长裤".
+
+Only promote feedback to profile memory when the user phrases it as a general rule or confirms it across repeated requests.
+
 ## Minimal Profile Summary
 
 After initialization, summarize in 3-5 lines:

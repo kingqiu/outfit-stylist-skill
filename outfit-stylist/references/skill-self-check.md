@@ -1,0 +1,71 @@
+# Skill Self-Check
+
+Run this checklist before publishing, installing into another agent, or making a large workflow change.
+
+## Structure
+
+- `SKILL.md` exists at the skill root.
+- YAML frontmatter has `name: outfit-stylist`.
+- Public Chinese name remains `穿衣搭子`.
+- `SKILL.md` stays as the entrypoint, not the full manual.
+- Detailed behavior lives in one-level reference files under `references/`.
+- Reusable output scaffolds live in `assets/templates/`.
+- No essential runtime behavior exists only in `agents/openai.yaml`.
+
+## Reference Integrity
+
+- Every `references/*.md` file named in `SKILL.md` exists.
+- No referenced file requires a second-level hidden reference to understand core behavior.
+- Long references have clear headings and can be searched with obvious terms.
+- `model-capability-config.md` explains reasoning, image input, and image output separately.
+- `end-to-end-workflow.md` explains the complete path from user request to text advice and image board.
+- `outfit-board-prompting.md` includes default template, scenario packs, weather packs, hard exclusions, and visual QA.
+
+## Core Behavior
+
+- Default recommendation is Chinese.
+- Default deliverable is concise text advice plus a generated outfit board when image output is available.
+- Text-only advice is allowed only when image generation is unavailable, explicitly unwanted, or impossible in the current agent.
+- Normal output uses one strongest outfit, one optional adjustment or backup, and one `穿搭雷区`.
+- Three full plans are used only when the user asks for multiple options.
+- Image uploads are converted into a structured wardrobe inventory before recommendations.
+- Outfit diagnosis gives a clear verdict before rebuilding the outfit.
+- Existing clothes are used before substitutes or purchases.
+
+## Model Fallbacks
+
+- No reasoning model: current agent model follows the same reasoning contract.
+- No image input model: do not hallucinate uploaded image content; ask for text description only when needed.
+- No image output model: explicitly say image generation is unavailable and provide a text board.
+- Image input, reasoning, and image output may use different providers.
+- No API keys, secrets, tokens, private endpoints, or local-only absolute paths are committed.
+
+## Visual Quality
+
+- Default image template is `Structured OOTD Styling Card`.
+- Visual style is illustrated, mobile-first, natural editorial, and not a virtual try-on.
+- Image labels are Chinese unless a brand or fashion term truly requires English.
+- Uploaded garment fidelity is locked: category, length, color, silhouette, and key details.
+- Long trousers do not become shorts; vests do not become coats; Polo shirts do not become T-shirts.
+- Board excludes underwear, lingerie, makeup, nail panels, wallet contents, phones, notebooks, receipts, drinks, unrelated props, extra people, logos, and watermarks.
+- If Chinese text rendering is weak, switch to numbered board mode and provide Chinese callout mapping separately.
+
+## Memory And Privacy
+
+- Profile initialization explains why questions are asked, how many questions will be asked, optional skipping, and local/private storage expectations.
+- Profile memory stores only user-provided preferences and practical constraints.
+- Wardrobe memory stores only user-provided or image-visible garment attributes.
+- Do not infer sensitive identity, body judgments, attractiveness, exact brand, size, or health information from photos.
+- When memory is unavailable, keep personalization within the current conversation and say so only when relevant.
+
+## Regression Tests
+
+- Review `tests/regression-scenarios.md` after changing prompts, workflow, model configuration, or voice.
+- Run a document-level simulation for at least:
+  - single uploaded item
+  - multi-image wardrobe combination
+  - outfit diagnosis
+  - outdoor/weather scenario
+  - no image output fallback
+  - no image input fallback
+- Generated visual outputs remain local-only and are not committed.

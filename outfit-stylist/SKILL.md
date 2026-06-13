@@ -60,7 +60,9 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 ## Required References
 
 - Read `references/agent-compatibility.md` before changing package structure, installation paths, metadata, or runtime assumptions.
+- Read `references/skill-self-check.md` before publishing, installing into another agent, or doing a large workflow/prompt change.
 - Read `references/model-capability-config.md` before handling image input/output availability, provider configuration, or fallbacks.
+- Read `references/minimal-configuration.md` when explaining setup levels, missing model behavior, or install-time capability choices.
 - Read `references/end-to-end-workflow.md` before implementing or revising the full recommendation flow across reasoning, image input, image output, and fallback behavior.
 - Read `references/image-input-guidelines.md` when the user uploads clothing or outfit images.
 - Read `references/recommendation-format.md` before producing user-facing outfit recommendations.
@@ -69,6 +71,7 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 - Read `references/outfit-board-prompting.md` before generating or specifying outfit board images.
 - Read `references/scenario-playbooks.md` for occasion-specific advice.
 - Read `references/outfit-profile-schema.md` and `references/wardrobe-schema.md` when creating or updating user/wardrobe memory.
+- Read `references/memory-workflow.md` when linking profile preferences, wardrobe items, and user feedback across sessions.
 - Read `references/trend-reference-guidelines.md` when the user asks for current trends or trend-aware styling.
 - Read `references/safety-guardrails.md` for image, body, identity, and tone constraints.
 
