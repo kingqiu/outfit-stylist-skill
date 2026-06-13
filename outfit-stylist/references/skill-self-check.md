@@ -72,3 +72,16 @@ Run this checklist before publishing, installing into another agent, or making a
   - no image output fallback
   - no image input fallback
 - Generated visual outputs remain local-only and are not committed.
+
+## SkillHub Publishing
+
+Before uploading to Xiaohongshu SkillHub:
+
+- Node.js is installed and is version 18 or newer.
+- `skillhub-upload` CLI is installed and available in `PATH`.
+- If the agent does not already have the upload skill, register the package-provided `skill/SKILL.md` in the agent's skill directory.
+- Run the skill creator validator on the skill directory and confirm it passes.
+- Confirm `git status` is clean or only contains intentional release changes.
+- Confirm `git ls-files` does not include `.DS_Store`, generated visual outputs, API keys, `.env` files, secrets, or private local memory.
+- Upload the skill directory itself, not the whole development repository, unless the SkillHub tool explicitly asks for the repo root.
+- During upload preview, verify display name, description, default prompt, and included files before final submission.
