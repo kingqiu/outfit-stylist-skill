@@ -449,3 +449,38 @@ QA:
 - Pass: uses one main outfit, one adjustment, and one avoid section.
 - Pass: wording is compact enough for phone reading.
 - Pass: the uploaded item remains the anchor and is not replaced.
+
+## Scenario 7: Profile Initialization
+
+Prompt:
+
+> 第一次用穿衣搭子，要不要先告诉你一些我的基本信息？
+
+Simulated output:
+
+```markdown
+可以，给我 30 秒的信息就够了；不想答的可以跳过。
+
+1. 你希望我按什么穿衣方向给建议？男装 / 女装 / 中性 / 都可以
+2. 你的年龄段大概是？20s / 30s / 40s / 其他
+3. 身高体重大概多少？可跳过
+4. 你最常见的穿衣场景是？通勤 / 商务 / 见朋友 / 约会 / 户外 / 其他
+5. 你喜欢或不喜欢哪些风格、颜色？
+6. 你有哪些舒适雷区？比如硬材质、紧身、高跟、露肤、磨脚、太热
+
+收到后我会记成一个轻量画像，以后给你建议会更贴近你。
+```
+
+If the user is asking for an immediate outfit recommendation, answer the outfit first and append:
+
+```markdown
+以后如果你愿意，我可以再用 30 秒帮你建一个穿衣画像；不影响这次先出方案。
+```
+
+QA:
+
+- Pass: asks at most 6 questions.
+- Pass: height/weight are optional.
+- Pass: does not infer body type or sensitive identity.
+- Pass: does not block urgent styling requests.
+- Watch: profile collection should remain lightweight and should not become a long onboarding questionnaire.

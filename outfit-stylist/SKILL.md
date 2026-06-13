@@ -92,6 +92,7 @@ If the image model cannot reliably render Chinese, generate a clean numbered vis
 Use these assets as output scaffolds when helpful:
 
 - `assets/templates/profile.yaml`
+- `assets/templates/profile-initialization.md`
 - `assets/templates/model-capabilities.yaml`
 - `assets/templates/scenario-outfit.md`
 - `assets/templates/item-styling.md`
