@@ -7,6 +7,9 @@ Run this checklist before publishing, installing into another agent, or making a
 - `SKILL.md` exists at the skill root.
 - YAML frontmatter has `name: outfit-stylist`.
 - Public Chinese name remains `穿衣搭子`.
+- Repository root has a `LICENSE` file.
+- License is `PolyForm Noncommercial License 1.0.0` unless the author explicitly changes it.
+- Public README explains that personal/noncommercial use is allowed and commercial use requires separate written permission.
 - `SKILL.md` stays as the entrypoint, not the full manual.
 - Detailed behavior lives in one-level reference files under `references/`.
 - Reusable output scaffolds live in `assets/templates/`.

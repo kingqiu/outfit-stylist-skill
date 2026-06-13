@@ -22,6 +22,8 @@ Scope:
 | Node version | Pass | Node.js is newer than v18. |
 | SkillHub CLI | Pass | `skillhub-upload` is available in `PATH`. |
 | Public README | Pass | Root `README.md` exists for public positioning, installation, usage, and cautions. |
+| License | Pass | Root `LICENSE` uses PolyForm Noncommercial License 1.0.0. |
+| Commercial restriction notice | Pass | README states personal/noncommercial use is allowed and commercial use requires written permission. |
 | Scope guard | Pass | `SKILL.md` includes unrelated-request handling. |
 | Internal disclosure guard | Pass | `SKILL.md` limits internal design disclosure to README-level public summaries. |
 
