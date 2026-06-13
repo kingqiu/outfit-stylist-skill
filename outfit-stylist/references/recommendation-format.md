@@ -2,6 +2,8 @@
 
 Use a compact styling-card format, but do not sound like a form. Default to one strongest recommendation, one optional adjustment/backup, and a "穿搭雷区" section. Do not default to three full plans unless the user asks for multiple options.
 
+Default deliverable: concise text advice plus a generated outfit-board image. Do not stop at text unless image generation is unavailable, the user asks for text only, or the current agent cannot call image generation.
+
 ## Scenario Outfit
 
 ```markdown
@@ -102,3 +104,7 @@ Use "方案一/方案二/方案三" only when the user explicitly asks for multi
 - Use item-list templates as internal scaffolding, not the final voice.
 - Use "穿搭雷区" for avoid advice; it is more useful than a weak third option.
 - Prefer "我建议你选择..." over "我会让你穿...".
+
+## Image Companion
+
+After the text recommendation, generate or attach the outfit-board image using the default `Structured OOTD Styling Card` template. If it cannot be generated, add a short fallback note before the text board so the missing image is explicit.

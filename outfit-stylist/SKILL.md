@@ -46,8 +46,9 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 5. Only provide 2-3 full outfit options when the user explicitly asks for multiple plans or detailed analysis.
 6. Put the best option first and keep output mobile-friendly.
 7. Add a short reason, risk note, and quick substitution.
-8. If image output is requested, follow `references/outfit-board-prompting.md`.
-9. If image models are unavailable, use the fallback behavior in `references/model-capability-config.md`.
+8. Produce the normal deliverable as concise text advice plus an outfit-board image.
+9. If image output is available, follow `references/outfit-board-prompting.md` and generate the outfit board by default.
+10. If image output is unavailable, the user explicitly asks for text only, or the current agent cannot call an image generator, use the fallback behavior in `references/model-capability-config.md`.
 
 ## Required References
 
@@ -66,6 +67,8 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 ## Output Rules
 
 - Default to Chinese for advice, titles, callouts, and outfit-board text.
+- A complete styling recommendation normally includes both concise text advice and a generated outfit-board image.
+- Do not provide text-only styling advice by default. Text-only is allowed only when image generation is unavailable, the user asks for no image, or the current agent cannot call an image generator.
 - Keep normal recommendations compact: one main outfit, one optional adjustment or backup, and a "穿搭雷区" section.
 - Do not default to three full plans. Use three plans only when the user asks for multiple options.
 - Write like a calm human stylist: make a judgment, explain the tradeoff, then give the exact outfit.
@@ -77,7 +80,9 @@ Read `references/foundational-model.md` when a request needs deeper judgment, tr
 
 ## Visual Output
 
-When visual output is available and requested, create a vertical outfit board/styling board, not default real-person virtual try-on. The default V1 image template is the `Structured OOTD Styling Card`: light header, central illustrated outfit figure, surrounding item cards, and bottom analysis strip. The image should use Chinese labels and mobile-first composition.
+When visual output is available, create a vertical outfit board/styling board by default, not only when explicitly requested. Do not default to real-person virtual try-on. The default V1 image template is the `Structured OOTD Styling Card`: light header, central illustrated outfit figure, surrounding item cards, and bottom analysis strip. The image should use Chinese labels and mobile-first composition.
+
+If image output is unavailable, say so briefly and provide the text-board fallback instead of silently omitting the image.
 
 If the image model cannot reliably render Chinese, generate a clean numbered visual board and provide the exact Chinese annotations separately.
 

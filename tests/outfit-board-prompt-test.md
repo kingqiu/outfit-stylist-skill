@@ -485,3 +485,28 @@ Decision:
 
 - Natural editorial layout generalizes well beyond business scenarios.
 - Add future prompt constraint: no extra people, no friend-group photo inserts, no decorative mini photos unless the user asks for a social-card style.
+
+## Output Contract Update
+
+Issue found:
+
+- In a multi-image business-social test, the assistant initially returned only text and omitted the outfit-board image.
+
+Decision:
+
+- A normal styling recommendation must include concise text advice plus a generated outfit-board image.
+- Text-only output is allowed only when image generation is unavailable, the user asks for text only, or the current agent cannot call an image generator.
+- If image output is unavailable, the assistant must say so briefly and provide the text-board fallback instead of silently omitting the image.
+
+## Multi-Image Fidelity Issue
+
+Issue found:
+
+- In the business-social multi-image test, uploaded image 4 was a cream long trouser, but the generated outfit board rendered it as cream shorts.
+
+Decision:
+
+- Multi-image outfit boards must preserve selected uploaded item identity.
+- Before image generation, lock each selected item's category, length, color family, silhouette, and key visible details.
+- Do not change uploaded long trousers into shorts, shirts into jackets, vests into coats, or alter key color/design details for convenience.
+- If an uploaded item is unsuitable for the weather or occasion, choose another uploaded item or state that a missing substitute is needed instead of changing the garment.

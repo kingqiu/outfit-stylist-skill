@@ -65,10 +65,29 @@ For normal user requests, keep the answer short:
 When the user uploads multiple items:
 
 1. Create a compact inventory.
-2. Group items by compatibility: color, proportion, texture, formality, season.
-3. Build 2-3 complete outfits.
-4. Mark best, backup, and not-recommended combinations.
-5. Add missing items such as shoes, bag, outerwear, or accessories.
+2. Preserve item identity: category, length, color family, key silhouette, and visible design details.
+3. Group items by compatibility: color, proportion, texture, formality, season.
+4. Build 2-3 complete outfits.
+5. Mark best, backup, and not-recommended combinations.
+6. Add missing items such as shoes, bag, outerwear, or accessories.
+
+## Wardrobe Item Fidelity
+
+When the user uploads clothing images, selected items must stay visually faithful in recommendations and generated outfit boards.
+
+Lock these attributes before prompting image generation:
+
+```text
+item id -> category -> length -> color -> silhouette -> key details
+```
+
+Examples:
+
+- "图 4：米白色长裤，抽绳腰，直筒/锥形长裤" must not become shorts.
+- "图 3：米白无袖马甲" must not become a long coat or shirt.
+- "图 2：深色侧边条纹长裤" must not become plain black trousers if used.
+
+Do not alter uploaded items to better fit weather, style, or layout. If the original item is unsuitable, recommend a different uploaded item or say a missing substitute is needed.
 
 ## Photo Uncertainty
 

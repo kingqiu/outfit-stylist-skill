@@ -113,6 +113,7 @@ Template adaptation:
 - Single uploaded item: make the uploaded item the anchor item card and show it integrated into the central outfit.
 - Wardrobe/multi-image: use the selected outfit as the central look and put chosen wardrobe items into item cards.
 - Default boards should not add extra people, friend-group photos, decorative mini photos, or unrelated scene snapshots unless the user asks for a social-card style.
+- For uploaded wardrobe items, preserve category, length, color, silhouette, and key details. Do not turn long trousers into shorts, shirts into jackets, vests into coats, or one color family into another.
 
 ## Gold Standard Visual Style
 
@@ -173,6 +174,7 @@ Header refinement: title should be moderately sized with breathing room; scene a
 Menswear fit refinement: avoid short cropped trousers or excessive ankle exposure in business scenes; prefer clean full-length trousers with a slight break over polished leather shoes.
 Naturalness refinement: avoid perfectly rigid symmetry and evenly boxed card grids. Use subtle card overlap, tape, varied card sizes, left-side notes, and asymmetric spacing to create a more human editorial page.
 Scene refinement: a soft background atmosphere is fine, but do not add extra people, friend photos, decorative mini photo prints, or unrelated lifestyle snapshots in default boards.
+Wardrobe fidelity: if an item comes from the user's uploaded images, preserve its category, length, color, silhouette, and key details exactly enough to be recognizable. Do not modify uploaded garments for convenience or aesthetics.
 
 Required Chinese text on image:
 标题：[中文标题]
@@ -196,11 +198,13 @@ Outfit details:
 [ACCESSORIES]
 [OUTERWEAR]
 [ANCHOR_ITEM if user uploaded one item]
+[FIDELITY_LOCKS for uploaded wardrobe items: category, length, color, silhouette, key details]
 
 Hard exclusions:
 No underwear, bras, panties, lingerie, sleepwear, nail close-ups, manicure panels, makeup items,
 lipstick, compact powder, skincare, wallet contents, ID cards, bank cards, receipts, phones,
-notebooks, pens, drinks, unrelated lifestyle objects, brand logos, watermarks, or body/beauty ranking.
+notebooks, pens, drinks, unrelated lifestyle objects, brand logos, watermarks, body/beauty ranking,
+or changing uploaded garment categories and lengths.
 Focus only on clothing, bag, shoes, accessories, fabric, color, silhouette, and proportion.
 
 Constraints:

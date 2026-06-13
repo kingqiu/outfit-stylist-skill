@@ -29,6 +29,8 @@ The figure should not imply virtual try-on or exact body/face matching.
 Item cards:
 outerwear / top / bottom / shoes / bag / accessories or belt.
 Each card should include 1-2 short Chinese notes and optional fabric texture circle.
+For uploaded wardrobe items, preserve category, length, color, silhouette, and key details.
+Do not turn long trousers into shorts or alter the garment category to fit the composition.
 
 Bottom analysis:
 color palette / overall effect / proportion or silhouette / risk reminder / suitable scenes.

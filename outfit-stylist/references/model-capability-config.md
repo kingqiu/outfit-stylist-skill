@@ -33,12 +33,14 @@ model_capabilities:
 
 - If image input is configured, inspect clothing images for category, color, silhouette, texture cues, formality, season, condition, and pairing risks.
 - If image input is unavailable, say briefly: "当前环境没有配置图片识别模型。你可以用文字描述这几件衣服，我会继续帮你搭配。" Then continue text-only.
-- If image output is configured, generate an outfit board only when requested or clearly useful.
-- If image output is unavailable, say briefly: "当前环境没有配置图片生成模型。我先给你一版文字搭配板。" Then provide a text board.
+- If image output is configured, generate an outfit board by default for styling recommendations. Do not wait for the user to explicitly ask for an image.
+- If image output is unavailable, the user asks for text only, or the current agent cannot call an image generator, say briefly: "当前环境没有配置图片生成模型。我先给你一版文字搭配板。" Then provide a text board.
 - Never block the whole recommendation because image input or output is unavailable.
 - Keep provider names, model names, credentials, and endpoint details outside the skill instructions.
 
 ## Text Board Fallback
+
+Use this only when image output cannot be generated or the user explicitly asks for text only.
 
 ```markdown
 ## 搭配板文字版
