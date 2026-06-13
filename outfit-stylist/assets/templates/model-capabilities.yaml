@@ -28,7 +28,7 @@ model_capabilities:
     notes: ""
   image_output:
     enabled: false
-    provider: "" # openai | gemini | minimax | jimeng | custom
+    provider: "" # openai | gemini | minimax | jimeng | listenhub | custom
     model: ""
     adapter: "" # api | cli | mcp | custom
     endpoint_env: ""
@@ -127,6 +127,43 @@ provider_examples:
       api_key_env: "GEMINI_API_KEY"
       supports_reference_images: true
       supports_chinese_text_rendering: true
+    listenhub_gemini:
+      provider: "listenhub"
+      underlying_provider: "google"
+      model: "gemini-3-pro-image"
+      model_aliases:
+        nano_banana_pro: "gemini-3-pro-image"
+        nano_banana_2: "gemini-3.1-flash-image"
+      adapter: "skill_or_api"
+      endpoint_env: "LISTENHUB_API_BASE"
+      auth_type: "api_key"
+      api_key_env: "LISTENHUB_API_KEY"
+      api_path: "/v1/images/generation"
+      default_aspect_ratio: "9:16"
+      default_image_size: "2K"
+      supports_reference_images: true
+      supports_chinese_text_rendering: true
+      reference_image_formats:
+        - "fileData"
+        - "inlineData"
+      notes: "Use ListenHub Image skill/API as the host adapter; send outfit board prompt as prompt."
+    listenhub_openai:
+      provider: "listenhub"
+      underlying_provider: "openai"
+      model: "gpt-image-2"
+      adapter: "skill_or_api"
+      endpoint_env: "LISTENHUB_API_BASE"
+      auth_type: "api_key"
+      api_key_env: "LISTENHUB_API_KEY"
+      api_path: "/v1/images/generation"
+      default_aspect_ratio: "9:16"
+      default_image_size: "2K"
+      supports_reference_images: true
+      supports_chinese_text_rendering: true
+      reference_image_formats:
+        - "fileData"
+        - "inlineData"
+      notes: "Set ListenHub request provider to openai and model to gpt-image-2."
     minimax_image:
       provider: "minimax"
       model: "image-01"

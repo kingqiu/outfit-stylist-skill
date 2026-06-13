@@ -35,7 +35,7 @@ model_capabilities:
     notes: ""
   image_output:
     enabled: false
-    provider: "" # openai | gemini | minimax | jimeng | custom
+    provider: "" # openai | gemini | minimax | jimeng | listenhub | custom
     model: ""
     adapter: "" # api | cli | mcp | custom
     endpoint_env: ""
@@ -80,6 +80,7 @@ The reasoning model handles outfit decisions after user context, wardrobe items,
 | `gemini` / Nano Banana family | Alternative outfit board generation and reference-image workflows | Official Gemini image model family includes Nano Banana, Nano Banana 2, and Nano Banana Pro; exact model id belongs in config. |
 | `minimax` / image generation | Optional image generation backend | Official MiniMax API supports text-to-image and image-to-image generation through `/v1/image_generation`; keep model and provider limits configurable. |
 | `jimeng` | ByteDance/Jimeng image generation | Support Volcengine Jimeng/Seedream adapters, especially text-to-image and reference-image outfit boards. |
+| `listenhub` | ListenHub image generation skill/API | Compatible host adapter for Google/Gemini and OpenAI/GPT-image-2 image generation; supports prompt, aspect ratio, image size, and reference images. |
 | `custom` | Any compatible image generation backend | Must accept a prompt and return an image artifact. |
 
 ### Image Input
@@ -172,6 +173,8 @@ These notes reflect official provider documentation checked on 2026-06-13. Becau
 | Zhipu HTTP API guide | https://docs.bigmodel.cn/cn/guide/develop/http/introduction | Standard REST API; common endpoint is `https://open.bigmodel.cn/api/paas/v4/chat/completions` with bearer-token authorization. |
 | GLM-4.6 | https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6 | Text-output model with improved reasoning, tool use, long context, and Chinese writing quality. |
 | GLM-4.5 | https://docs.bigmodel.cn/cn/guide/models/text/glm-4.5 | Agent-oriented GLM model family with thinking and non-thinking modes. |
+| ListenHub image skill | https://listenhub.ai/docs/en/skills/image | Agent-facing image generation skill for text prompts and optional reference images. |
+| ListenHub image API | https://listenhub.ai/docs/en/openapi/api-reference/image-generation | `POST /v1/images/generation`; supports `provider`, `model`, `prompt`, `imageConfig`, and `referenceImages`. |
 
 ## Reasoning Model Adapter Notes
 
@@ -298,6 +301,63 @@ Operational notes:
 - Prefer the Responses API image tool for multi-turn visual refinement.
 - `gpt-image-2` supports configurable size, quality, and output format. Use portrait sizes such as `1024x1536` or higher portrait resolutions when available for mobile boards.
 - If reference garments are used, include the skill's fidelity locks and expect higher input cost because image inputs are processed at high fidelity.
+
+## ListenHub Image Adapter Notes
+
+Use ListenHub as an `image_output` adapter when the host environment exposes ListenHub Skills or the ListenHub OpenAPI.
+
+Recommended ListenHub configs:
+
+```yaml
+provider: "listenhub"
+model: "gemini-3-pro-image | gemini-3.1-flash-image | gpt-image-2"
+adapter: "skill | api"
+endpoint_env: "LISTENHUB_API_BASE"
+auth_type: "api_key"
+api_key_env: "LISTENHUB_API_KEY"
+underlying_provider: "google | openai"
+supports_reference_images: true
+supports_chinese_text_rendering: true
+```
+
+API contract:
+
+```yaml
+method: POST
+path: /v1/images/generation
+request:
+  provider: "google | openai"
+  model: ""
+  prompt: ""
+  imageConfig:
+    aspectRatio: "9:16"
+    imageSize: "1K | 2K | 4K"
+  referenceImages:
+    - fileData:
+        fileUri: ""
+        mimeType: ""
+    - inlineData:
+        data: ""
+        mimeType: ""
+response:
+  image_data: "base64 image data in model output"
+```
+
+Outfit-stylist usage:
+
+- Send the final `Structured OOTD Styling Card` prompt as `prompt`.
+- Use `imageConfig.aspectRatio: "9:16"` for default mobile outfit boards when supported.
+- Use `imageConfig.imageSize: "2K"` as a practical default; use `4K` only when the user asks for a polished shareable board and the host budget allows it.
+- For uploaded garments, pass reference images through `referenceImages` and include fidelity locks in the prompt.
+- For GPT-image-2 through ListenHub, set `provider: "openai"` and `model: "gpt-image-2"`.
+- For Gemini through ListenHub, set `provider: "google"` and choose the configured Gemini image model.
+- If the ListenHub Skill returns inline display output, use it directly; if the OpenAPI returns base64, save or attach it as the generated outfit board artifact.
+
+Reference-image notes:
+
+- ListenHub supports URL references through `fileData`.
+- ListenHub API supports base64 references through `inlineData`.
+- Keep image reference count within the underlying model limits. The official API notes max 14 references for Gemini models and max 4 for GPT-image-2.
 
 ## Gemini Adapter Notes
 

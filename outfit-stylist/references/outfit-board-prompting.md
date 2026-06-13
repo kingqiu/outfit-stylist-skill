@@ -416,6 +416,7 @@ Use these small adjustments only after the main prompt is complete.
 - Gemini Nano Banana: ask for cleaner typography and fewer labels when Chinese text density becomes high; use Nano Banana Pro for complex boards.
 - Jimeng / Seedream: keep prompts concise when possible; put fidelity locks and Chinese text fields near the end as direct instructions.
 - MiniMax image generation: keep item zones explicit and avoid asking for too many small text panels.
+- ListenHub Image: use the same structured outfit-board prompt; set `aspectRatio` to `9:16` when available, pass uploaded garments as `referenceImages`, and save/attach base64 output when using the OpenAPI.
 - If the provider cannot render Chinese reliably, switch to numbered board mode and provide Chinese callout mapping in text.
 
 ## Default Template: Structured OOTD Styling Card

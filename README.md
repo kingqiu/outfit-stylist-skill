@@ -91,12 +91,34 @@ outfit-stylist/assets/templates/model-capabilities.yaml
 - OpenAI GPT Image / vision-capable models
 - Google Gemini Nano Banana 系列
 - 即梦 / Seedream
+- ListenHub Image Skill / OpenAPI
 - MiniMax
 - DeepSeek / DeepSeek-compatible endpoints
 - 智谱 GLM
 - Custom provider
 
 不要把 API key、access key、secret、token 或私有 endpoint 写进仓库。
+
+### ListenHub 图片生成兼容
+
+如果你的 agent 环境支持 ListenHub Image Skill 或 ListenHub OpenAPI，可以把它配置为 `image_output` 适配器。
+
+常见配置方式：
+
+```yaml
+image_output:
+  enabled: true
+  provider: "listenhub"
+  underlying_provider: "google" # google | openai
+  model: "gemini-3-pro-image" # or gemini-3.1-flash-image / gpt-image-2
+  adapter: "skill_or_api"
+  endpoint_env: "LISTENHUB_API_BASE"
+  api_key_env: "LISTENHUB_API_KEY"
+  default_aspect_ratio: "9:16"
+  default_image_size: "2K"
+```
+
+使用 ListenHub 时，`outfit-stylist` 仍然负责生成穿搭建议和搭配板提示词；ListenHub 负责实际图片生成。
 
 ## 使用示例
 
