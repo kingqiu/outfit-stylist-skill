@@ -216,6 +216,7 @@ The outfit-board prompt should include:
 - user profile essentials
 - selected outfit
 - one scenario prompt pack from `references/outfit-board-prompting.md`
+- one optional weather function pack when weather affects comfort or safety
 - anchor or wardrobe fidelity locks
 - Chinese labels
 - default `Structured OOTD Styling Card` template
@@ -226,6 +227,18 @@ Scenario pack mapping:
 ```yaml
 business_client_visit:
   use_for: client meetings, finance customers, interviews, office presentations, business social events
+commute_office_daily:
+  use_for: ordinary workdays, commuting, shared offices, hybrid work, internal meetings
+business_travel_transit:
+  use_for: flights, high-speed rail, business trips, arriving then meeting people
+ceremony_wedding_banquet:
+  use_for: weddings, banquets, ceremonies, annual meetings, formal dinners
+family_parent_child:
+  use_for: family gatherings, meeting parents, parent-child outings, school pickup
+campus_interview_academic:
+  use_for: school, university, interviews, academic events, student presentations
+fitness_sport_to_daily:
+  use_for: gym, yoga, running, workout-to-errands, sport-to-cafe
 casual_weekend:
   use_for: friend meetups, cafes, city walks, shopping, museum visits
 outdoor_sport_travel:
@@ -237,3 +250,20 @@ wardrobe_multi_image:
 ```
 
 If two packs seem relevant, choose the one that best protects the user's real-world situation. Example: for "business gathering with uploaded clothes", use `wardrobe_multi_image` plus business labels and risk notes, not two full visual styles.
+
+Weather function pack mapping:
+
+```yaml
+high_heat_summer:
+  use_for: high temperature, humidity, heatwave, summer outdoor plans
+cold_winter:
+  use_for: cold days, wind chill, winter commuting, indoor-outdoor temperature gaps
+rain_wet_weather:
+  use_for: rain, drizzle, short showers, wet pavement, rainy season
+wind_temperature_swing:
+  use_for: windy days, spring/fall temperature swings, seaside wind, day-to-night cooling
+sun_uv:
+  use_for: strong sun, seaside, outdoor walking, exposed commute, summer travel
+```
+
+Weather packs are additive. They should adjust fabrics, layers, shoes, and risk notes without overriding the primary social scenario.

@@ -5,7 +5,8 @@ Use this as the default V1 outfit-board image template.
 ```text
 Create a vertical mobile-first structured OOTD styling card for [SCENARIO].
 Use [USER_PROFILE] and [OUTFIT_PLAN] as the styling basis.
-Apply the selected scenario pack: [SCENARIO_PACK].
+Apply the selected primary scenario pack: [SCENARIO_PACK].
+Apply the optional weather function pack when needed: [WEATHER_PACK].
 
 Visual style:
 polished fashion notebook page, warm soft paper-texture background, subtle tape details,
@@ -67,11 +68,12 @@ Fill the prompt in this order:
 
 ```text
 1. base card template
-2. one scenario pack from references/outfit-board-prompting.md
-3. outfit details
-4. fidelity locks for uploaded items
-5. Chinese text fields
-6. hard exclusions
+2. one primary scenario pack from references/outfit-board-prompting.md
+3. optional weather function pack from references/outfit-board-prompting.md
+4. outfit details
+5. fidelity locks for uploaded items
+6. Chinese text fields
+7. hard exclusions
 ```
 
 Use only one primary scenario pack unless the request clearly combines two contexts, such as "client visit then dinner". For uploaded wardrobe items, put fidelity locks after outfit details so the image model sees them as final constraints.
@@ -79,7 +81,21 @@ Use only one primary scenario pack unless the request clearly combines two conte
 Scenario pack options:
 
 - `business_client_visit`
+- `commute_office_daily`
+- `business_travel_transit`
+- `ceremony_wedding_banquet`
+- `family_parent_child`
+- `campus_interview_academic`
+- `fitness_sport_to_daily`
 - `casual_weekend`
 - `outdoor_sport_travel`
 - `social_date_gathering`
 - `wardrobe_multi_image`
+
+Weather function pack options:
+
+- `high_heat_summer`
+- `cold_winter`
+- `rain_wet_weather`
+- `wind_temperature_swing`
+- `sun_uv`

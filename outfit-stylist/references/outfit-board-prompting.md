@@ -63,19 +63,20 @@ Build the image prompt in this order so every model receives the same essential 
 
 ```text
 1. base template: Structured OOTD Styling Card
-2. scenario pack: business / casual / outdoor / social / wardrobe
-3. selected outfit details
-4. uploaded-item fidelity locks, if any
-5. Chinese text fields
-6. hard exclusions
-7. provider-specific size or reference-image settings
+2. primary scenario pack: business / commute / travel / ceremony / family / campus / fitness / casual / outdoor / social / wardrobe
+3. optional weather function pack: heat / cold / rain / wind / sun
+4. selected outfit details
+5. uploaded-item fidelity locks, if any
+6. Chinese text fields
+7. hard exclusions
+8. provider-specific size or reference-image settings
 ```
 
 Do not start from a freeform aesthetic prompt alone. The board should always be grounded in the final outfit recommendation and any uploaded wardrobe items.
 
 ## Scenario Prompt Packs
 
-Choose one primary scenario pack. Add one secondary pack only when the user's situation clearly needs it.
+Choose one primary scenario pack. Add one optional weather function pack when weather materially changes comfort, safety, or item choice.
 
 ### Business / Client Visit
 
@@ -98,6 +99,131 @@ Chinese label suggestions:
 标题：稳妥商务 OOTD / 柔和商务 OOTD / 客户拜访 OOTD
 首选理由：专业但不硬 / 干净稳妥 / 有分寸感
 风险提醒：别配运动鞋 / 避免太休闲 / 别太抢眼
+```
+
+### Commute / Office Daily
+
+Use for ordinary workdays, commuting, shared offices, hybrid work, internal meetings, office-to-dinner transitions, or "tomorrow to work" requests.
+
+```text
+Commute office pack:
+practical daily polish, comfortable for transit and sitting, office temperature awareness,
+clean but not client-meeting formal, repeatable wardrobe feeling, low-maintenance fabrics.
+The outfit should look intentional in the office and comfortable during commute.
+Prioritize wrinkle resistance, walkable shoes, layers for air conditioning, bag practicality, and quiet color coordination.
+Risk reminder should focus on looking too casual, overheating on commute, freezing in office AC, or shoes that are uncomfortable for walking.
+```
+
+Chinese label suggestions:
+
+```text
+标题：通勤日常 OOTD / 办公室 OOTD / 上班轻正式
+首选理由：舒服又得体 / 通勤不累 / 办公室刚好
+风险提醒：别太像周末 / 注意空调温差 / 鞋要能走
+```
+
+### Business Travel / Transit
+
+Use for flights, high-speed rail, business trips, arriving then meeting people, light packing, or day-to-night travel plans.
+
+```text
+Business travel pack:
+travel-ready but presentable, wrinkle-resistant layers, comfortable waistband or stretch,
+compact bag logic, shoes that handle walking and still look polished.
+Show one optional layer or jacket for temperature shifts, and keep the board tidy rather than tourist-like.
+Avoid luggage piles, boarding passes, passports, maps, phones, tickets, coffee cups, or travel props unless explicitly requested.
+Risk reminder should focus on wrinkling, uncomfortable waist/shoes, overpacking, or arriving underdressed.
+```
+
+Chinese label suggestions:
+
+```text
+标题：差旅轻装 OOTD / 高铁出差 OOTD / 到达即见人
+首选理由：久坐不皱 / 到站能见人 / 一套多场景
+风险提醒：别穿易皱面料 / 鞋别太新 / 外套别太厚
+```
+
+### Ceremony / Wedding / Banquet
+
+Use for weddings, banquets, formal ceremonies, annual meetings, gala dinners, guest-of-honor situations, or family formal occasions.
+
+```text
+Ceremony banquet pack:
+formal and respectful, polished occasionwear, clean lines, refined texture,
+avoid stealing attention from hosts or the couple, avoid overly casual shoes or bags.
+Use elegant item cards for jacket/dress/suit/shoes/bag/accessory, with restrained shine if appropriate.
+Risk reminder should focus on dress-code mismatch, overexposure, too much sparkle, all-white wedding guest looks, funeral-like heaviness, or shoes that cannot stand/walk for long.
+```
+
+Chinese label suggestions:
+
+```text
+标题：婚礼宾客 OOTD / 宴会得体 OOTD / 正式场合 OOTD
+首选理由：得体不抢眼 / 正式有分寸 / 体面耐看
+风险提醒：别抢主角 / 鞋要能久站 / 避免过度闪
+```
+
+### Family / Parent-Child
+
+Use for family gatherings, meeting parents, parent-child outings, school pickup, parks, errands with children, or relaxed family photos.
+
+```text
+Family parent-child pack:
+warm approachable tone, easy movement, washable or forgiving fabrics,
+not too precious, not too sloppy, friendly color balance.
+Prioritize comfort, movement range, pockets/bag usefulness, stain tolerance, and approachable styling.
+Avoid fragile fabrics, sharp accessories, impractical shoes, overly formal styling, or seductive/event-heavy styling.
+Risk reminder should focus on being too stiff, hard to move, easy to stain, or too casual for family elders.
+```
+
+Chinese label suggestions:
+
+```text
+标题：家庭聚会 OOTD / 亲子出门 OOTD / 见家人穿搭
+首选理由：亲和不随便 / 好活动 / 干净耐看
+风险提醒：别穿太娇贵 / 鞋要好走 / 避免太硬
+```
+
+### Campus / Interview / Academic
+
+Use for school, university, academic events, student presentations, first day of school, interviews, lectures, or research meetings.
+
+```text
+Campus academic pack:
+fresh, respectful, intelligent but not overly corporate,
+age-appropriate polish, neat layers, clean shoes, simple bag.
+Prioritize approachability, clarity, comfort for sitting/walking, and not looking either too casual or too business-heavy.
+Risk reminder should focus on looking immature, too formal for campus, too sloppy, or too trend-driven.
+```
+
+Chinese label suggestions:
+
+```text
+标题：校园得体 OOTD / 面试清爽 OOTD / 学术场合 OOTD
+首选理由：清爽可信 / 年轻但稳 / 专业不老气
+风险提醒：别太成熟 / 避免太街头 / 鞋面要干净
+```
+
+### Fitness / Sport-to-Daily
+
+Use for gym, yoga, running, light sport, gym-to-cafe, workout-to-errands, or运动后还要见人.
+
+```text
+Fitness transition pack:
+sport functional base with daily-ready finishing pieces,
+clean layering, breathable fabrics, tidy sneakers, compact bag.
+The board should not look like a pure gym gear catalogue unless the user asks for training outfit only.
+Prioritize sweat management, coverage after exercise, shoe function, and a simple outer layer for daily spaces.
+Avoid gym clutter, towels, bottles, headphones, phones, locker-room props, or body/fitness ranking.
+Risk reminder should focus on sweat marks, see-through fabric, poor support, or looking too gym-only for the next stop.
+```
+
+Chinese label suggestions:
+
+```text
+标题：运动后也体面 / 健身通勤 OOTD / 轻运动穿搭
+首选理由：能动也能见人 / 清爽不狼狈 / 功能不邋遢
+风险提醒：注意汗渍 / 外搭要带 / 别太健身房
 ```
 
 ### Casual / Weekend
@@ -183,6 +309,103 @@ Chinese label suggestions:
 标题：衣橱组合 OOTD / 现有衣服这样搭 / 商务聚会组合
 首选理由：现有单品最稳组合 / 颜色和场合都成立 / 保留单品特点
 风险提醒：未选单品别混入 / 长裤不能变短裤 / 休闲件别抢主场
+```
+
+## Weather Function Packs
+
+Use at most one primary weather pack unless the user gives extreme or mixed weather. Weather packs should change fabric, layers, shoes, and risk notes without changing the social tone of the primary scenario pack.
+
+### High Heat / Summer
+
+Use for high temperature, humidity, heatwave, strong indoor/outdoor temperature contrast, or summer outdoor plans.
+
+```text
+High heat function pack:
+breathable fabrics, lighter color weight when appropriate, sweat-aware layering,
+looser fit around body, minimal heavy accessories, walkable breathable shoes.
+Show fabric callouts such as cotton blend, linen blend, quick-dry, thin knit, or airy weave only when they match the outfit.
+Risk reminder should focus on overheating, sweat marks, clingy fabric, heavy dark layers, or non-breathable shoes.
+```
+
+Chinese label suggestions:
+
+```text
+温度提示：高温透气
+风险提醒：避免闷热 / 注意汗渍 / 少叠厚层
+```
+
+### Cold / Winter
+
+Use for cold days, wind chill, indoor-outdoor temperature gaps, winter commuting, or formal cold-weather events.
+
+```text
+Cold function pack:
+warm layered structure, coat or jacket logic, scarf/gloves only if needed,
+keep silhouette clean rather than bulky, preserve mobility and footwear warmth.
+Show warmth through layers and fabric texture, not by adding random winter props.
+Risk reminder should focus on looking bulky, ankle exposure, thin shoes, or overheating indoors.
+```
+
+Chinese label suggestions:
+
+```text
+温度提示：保暖分层
+风险提醒：别露脚踝 / 避免臃肿 / 室内可脱层
+```
+
+### Rain / Wet Weather
+
+Use for rain, drizzle, short showers, wet pavement, typhoon rain, or commute in rainy season.
+
+```text
+Rain function pack:
+water-resistant outer layer, darker or washable lower-half choices,
+grippy shoes, quick-dry or less absorbent fabric, compact umbrella/rain layer only as clothing-related note.
+Do not add puddles, umbrellas as large props, weather icons everywhere, or dramatic storm backgrounds.
+Risk reminder should focus on slippery soles, suede/leather damage, sheer wet fabric, long hems dragging, or light trousers showing stains.
+```
+
+Chinese label suggestions:
+
+```text
+天气提示：短时阵雨 / 梅雨通勤 / 湿地防滑
+风险提醒：鞋底防滑 / 避开麂皮 / 裤脚别拖地
+```
+
+### Wind / Temperature Swing
+
+Use for windy days, spring/fall temperature swings, seaside wind, mountain wind, or day-to-night cooling.
+
+```text
+Wind and swing function pack:
+secure layers, wind-blocking light outerwear, avoid flyaway or overly loose pieces,
+easy-to-remove layers for changing temperature.
+Risk reminder should focus on wind exposure, unstable hems, overly light outerwear, or being too cold after sunset.
+```
+
+Chinese label suggestions:
+
+```text
+天气提示：防风分层
+风险提醒：外套要挡风 / 傍晚会冷 / 裙摆别太飘
+```
+
+### Sun / UV
+
+Use for strong sun, seaside, outdoor walking, exposed commute, summer travel, or long daytime activity.
+
+```text
+Sun function pack:
+sun-aware coverage, breathable long sleeves or light outer layer when useful,
+hat/sunglasses only when appropriate to the scenario, lighter reflective palette if it fits.
+Risk reminder should focus on sun exposure, heat absorption, uncomfortable straps, or footwear unsuitable for long sun-exposed walking.
+```
+
+Chinese label suggestions:
+
+```text
+天气提示：防晒清爽
+风险提醒：注意暴晒 / 少穿吸热黑 / 鞋要耐走
 ```
 
 ## Provider-Specific Prompt Notes
